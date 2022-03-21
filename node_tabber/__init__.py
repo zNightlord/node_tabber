@@ -54,11 +54,11 @@ class node_tabberPreferences(AddonPreferences):
     )
     tally_weight: IntProperty(
         name="Tally Weight",
-        default = 35,
-        description="Maximum number of tallies for each node selected. Affects the \"weighting\" of the order of tallied results in the node list."
+        default=35,
+        description='Maximum number of tallies for each node selected. Affects the "weighting" of the order of tallied results in the node list.',
     )
     quick_place: BoolProperty(
-        name="Enable \"Quick Place\"",
+        name='Enable "Quick Place"',
         default=False,
         description="Allows immediate placement of selected node.",
     )
@@ -73,8 +73,6 @@ class node_tabberPreferences(AddonPreferences):
         description="Allows searching within node operations. Eg. PP could return Ping-Pong in the Math node.",
     )
 
-
-
     def draw(self, context):
         layout = self.layout
 
@@ -88,18 +86,16 @@ class node_tabberPreferences(AddonPreferences):
         row1.prop(self, "sub_search")
         row1.prop(self, "quick_place")
         row2.prop(self, "tally")
-        row2.operator('node.reset_tally',
-                    text = 'Reset Tally')
+        row2.operator("node.reset_tally", text="Reset Tally")
         row2.prop(self, "tally_weight")
-        #row2.prop(self, "nt_debug")
-        #row4.label(text="NOTE: CTRL + TAB : Performs \"Edit Group\" functionality.")
-
+        # row2.prop(self, "nt_debug")
+        # row4.label(text="NOTE: CTRL + TAB : Performs \"Edit Group\" functionality.")
 
         # Keymaps
 
-        #box = layout.box()
+        # box = layout.box()
         col = box.column()
-        col.label(text="Keymap List:",icon="KEYINGSET")
+        col.label(text="Keymap List:", icon="KEYINGSET")
 
         wm = bpy.context.window_manager
         kc = wm.keyconfigs.user
@@ -114,20 +110,17 @@ class node_tabberPreferences(AddonPreferences):
             for kmi_con in km.keymap_items:
                 if kmi_add.idname == kmi_con.idname:
                     if kmi_add.name == kmi_con.name:
-                        get_kmi_l.append((km,kmi_con))
+                        get_kmi_l.append((km, kmi_con))
 
         get_kmi_l = sorted(set(get_kmi_l), key=get_kmi_l.index)
 
         for km, kmi in get_kmi_l:
             if not km.name == old_km_name:
-                col.label(text=str(km.name),icon="DOT")
+                col.label(text=str(km.name), icon="DOT")
             col.context_pointer_set("keymap", km)
             rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
             col.separator()
             old_km_name = km.name
- 
-
-
 
 
 def register():
@@ -137,11 +130,16 @@ def register():
     wm = bpy.context.window_manager
     kc = wm.keyconfigs.addon
     if kc:
-        km = wm.keyconfigs.addon.keymaps.new(name='Node Editor', space_type='NODE_EDITOR')
-        kmi = km.keymap_items.new("node.add_tabber_search", type = 'TAB', value= 'PRESS')
+        km = wm.keyconfigs.addon.keymaps.new(
+            name="Node Editor", space_type="NODE_EDITOR"
+        )
+        kmi = km.keymap_items.new("node.add_tabber_search", type="TAB", value="PRESS")
         addon_keymaps.append((km, kmi))
-        kmi = km.keymap_items.new("node.group_edit", type = 'TAB', value= 'PRESS', ctrl= True)
+        kmi = km.keymap_items.new(
+            "node.group_edit", type="TAB", value="PRESS", ctrl=True
+        )
         addon_keymaps.append((km, kmi))
+
 
 def unregister():
     for km, kmi in addon_keymaps:
@@ -150,5 +148,3 @@ def unregister():
 
     operators.unregister()
     bpy.utils.unregister_class(node_tabberPreferences)
-
-
