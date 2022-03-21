@@ -3,6 +3,7 @@ import json
 import os
 import time
 import nodeitems_utils
+import pprint
 from . import nt_extras
 from bpy.types import (
     Operator,
@@ -121,9 +122,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         math_index = -1
         vector_math_index = -1
         mix_rgb_index = -1
+        boolean_math_index = -1
 
         for index, item in enumerate(nodeitems_utils.node_items_iter(context)):
-            # nt_debug("DEF: node_enum_items")
             if isinstance(item, nodeitems_utils.NodeItem):
 
                 # nt_debug(str(item.label))
@@ -152,6 +153,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     vector_math_index = index
                 if item.label == "MixRGB":
                     mix_rgb_index = index
+                if item.label == "Boolean Math":
+                    boolean_math_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -169,7 +172,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                             index_offset + 1 + index2,
                         )
                     )
-                index_offset += index2
+                index_offset += index2 + 1
 
             if vector_math_index > -1:
                 nt_debug("Adding vector math nodes")
@@ -185,7 +188,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                             index_offset + 1 + index2,
                         )
                     )
-                index_offset += index2
+                index_offset += index2 + 1
 
             if mix_rgb_index > -1:
                 nt_debug("Adding mix rgb nodes")
@@ -201,12 +204,27 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                             index_offset + 1 + index2,
                         )
                     )
-                index_offset += index2
+                index_offset += index2 + 1
+
+            if boolean_math_index > -1:
+                nt_debug("Adding boolean math nodes")
+                for index2, subname in enumerate(nt_extras.extra_boolean_math):
+                    tally = 0
+                    if subname[1] in content:
+                        tally = content[subname[1]]["tally"]
+                    enum_items.append(
+                        (
+                            str(boolean_math_index) + subname[0] + " " + subname[1],
+                            subname[1],
+                            str(tally),
+                            index_offset + 1 + index2,
+                        )
+                    )
+                index_offset += index2 + 1
 
         if prefs.tally:
             tmp = enum_items
             tmp = sorted(enum_items, key=take_fifth, reverse=True)
-        # print("\n\n" + str(tmp) + "\n\n")
         else:
             tmp = enum_items
         return tmp
@@ -258,27 +276,27 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             nt_debug("Writing sub node tally")
             write_score(item.nodetype[0], nice_name)
 
-        # print ("Hack0 : " + str(self._enum_item_hack)[])
         nt_debug("Hack")
-        # print (self.node_item)
-        # print (self._enum_item_hack[int(self.node_item[0]) -0][1])
-        # nt_debug(item.label)
 
         # no need to keep
         self._enum_item_hack.clear()
 
         if item:
-            # apply settings from the node item
-            for setting in item.settings.items():
-                ops = self.settings.add()
-                ops.name = setting[0]
-                ops.value = setting[1]
+            node_tree_type = None
+            if "node_tree" in item.settings:
+                node_tree_type = eval(item.settings["node_tree"])
+            try:
+                for setting in item.settings.items():
+                    if setting[0] != "node_tree":
+                        ops = self.settings.add()
+                        ops.name = setting[0]
+                        ops.value = setting[1]
+            except AttributeError:
+                print("An exception occurred")
 
-            self.create_node(context, item.nodetype)
-            # print("Added node in node tabber")
+            self.create_node(context, item.nodetype, node_tree_type)
 
             nt_debug(str(item.nodetype))
-            # print(str(item.nodename))
             nt_debug("extra 0: " + str(extra[0]))
             nt_debug("extra 1: " + str(extra[1]))
 
@@ -296,6 +314,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if extra[0] == "C":
                 node_active.blend_type = extra[1]
 
+            if extra[0] == "BM":
+                node_active.operation = extra[1]
+
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")
 
@@ -304,7 +325,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         else:
             return {"CANCELLED"}
 
-    def create_node(self, context, node_type=None):
+    def create_node(self, context, node_type=None, node_tree_type=None):
         nt_debug("DEF: create_node")
         space = context.space_data
         tree = space.edit_tree
@@ -318,6 +339,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             n.select = False
 
         node = tree.nodes.new(type=node_type)
+
+        if node_tree_type != None:
+            node.node_tree = node_tree_type
 
         node.select = True
         tree.nodes.active = node

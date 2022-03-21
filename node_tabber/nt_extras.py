@@ -93,3 +93,15 @@ extra_color = [
     [" C DARKEN", "Darken (D) COLOR"],
     [" C MIX", "Mix (M) COLOR"],
 ]
+
+extra_boolean_math = [
+    [" BM AND", "And (A) BOOL MATH"],
+    [" BM OR", "Or (O) BOOL MATH"],
+    [" BM NOT", "Not (N) BOOL MATH"],
+    [" BM NAND", "Not And (NA) BOOL MATH"],
+    [" BM NOR", "Nor (N) BOOL MATH"],
+    [" BM XNOR", "Equal (E) BOOL MATH"],
+    [" BM XOR", "Not Equal (NE) BOOL MATH"],
+    [" BM IMPLY", "Imply (I) BOOL MATH"],
+    [" BM NIMPLY", "Subtract (S) BOOL MATH"],
+]
