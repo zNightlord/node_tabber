@@ -286,6 +286,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if extra[0] == "C":
                 node_active.blend_type = extra[1]
 
+            if extra[0] == "RV":
+                node_active.data_type = extra[1]
+
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")
 
