@@ -68,6 +68,27 @@ def write_score(category, enum_items):
     return
 
 
+def sub_search(
+    enum_items, node_type_index, node_type, extras_ops, index_offset, content
+):
+    if node_type_index > -1:
+        nt_debug(f"Adding ${node_type} nodes")
+        for index2, subname in enumerate(extras_ops):
+            tally = 0
+            if subname[1] in content:
+                tally = content[subname[1]]["tally"]
+            enum_items.append(
+                (
+                    str(node_type_index) + subname[0] + " " + subname[1],
+                    subname[1],
+                    str(tally),
+                    index_offset + 1 + index2,
+                )
+            )
+        index_offset += index2 + 1
+    return enum_items, index_offset
+
+
 class NodeTabSetting(PropertyGroup):
     value: StringProperty(
         name="Value",
@@ -158,69 +179,15 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
         # Add sub node searching if enabled
         if prefs.sub_search:
-            if math_index > -1:
-                nt_debug("Adding math nodes")
-                for index2, subname in enumerate(nt_extras.extra_math):
-                    tally = 0
-                    if subname[1] in content:
-                        tally = content[subname[1]]["tally"]
-                    enum_items.append(
-                        (
-                            str(math_index) + subname[0] + " " + subname[1],
-                            subname[1],
-                            str(tally),
-                            index_offset + 1 + index2,
-                        )
-                    )
-                index_offset += index2 + 1
-
-            if vector_math_index > -1:
-                nt_debug("Adding vector math nodes")
-                for index2, subname in enumerate(nt_extras.extra_vector_math):
-                    tally = 0
-                    if subname[1] in content:
-                        tally = content[subname[1]]["tally"]
-                    enum_items.append(
-                        (
-                            str(vector_math_index) + subname[0] + " " + subname[1],
-                            subname[1],
-                            str(tally),
-                            index_offset + 1 + index2,
-                        )
-                    )
-                index_offset += index2 + 1
-
-            if mix_rgb_index > -1:
-                nt_debug("Adding mix rgb nodes")
-                for index2, subname in enumerate(nt_extras.extra_color):
-                    tally = 0
-                    if subname[1] in content:
-                        tally = content[subname[1]]["tally"]
-                    enum_items.append(
-                        (
-                            str(mix_rgb_index) + subname[0] + " " + subname[1],
-                            subname[1],
-                            str(tally),
-                            index_offset + 1 + index2,
-                        )
-                    )
-                index_offset += index2 + 1
-
-            if boolean_math_index > -1:
-                nt_debug("Adding boolean math nodes")
-                for index2, subname in enumerate(nt_extras.extra_boolean_math):
-                    tally = 0
-                    if subname[1] in content:
-                        tally = content[subname[1]]["tally"]
-                    enum_items.append(
-                        (
-                            str(boolean_math_index) + subname[0] + " " + subname[1],
-                            subname[1],
-                            str(tally),
-                            index_offset + 1 + index2,
-                        )
-                    )
-                index_offset += index2 + 1
+            for s in [
+                (math_index, "math", nt_extras.extra_math),
+                (vector_math_index, "vector math", nt_extras.extra_vector_math),
+                (mix_rgb_index, "mix rgb", nt_extras.extra_color),
+                (boolean_math_index, "boolean math", nt_extras.extra_boolean_math),
+            ]:
+                enum_items, index_offset = sub_search(
+                    enum_items, s[0], s[1], s[2], index_offset, content
+                )
 
         if prefs.tally:
             tmp = enum_items
@@ -305,17 +272,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             node_active = context.active_node
             node_selected = context.selected_nodes
 
-            if extra[0] == "M":
-                node_active.operation = extra[1]
-
-            if extra[0] == "VM":
+            if extra[0] in ["M", "VM", "BM"]:
                 node_active.operation = extra[1]
 
             if extra[0] == "C":
                 node_active.blend_type = extra[1]
-
-            if extra[0] == "BM":
-                node_active.operation = extra[1]
 
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")
@@ -387,9 +348,6 @@ class NODE_OT_reset_tally(bpy.types.Operator):
                 self.report({"INFO"}, info)
 
         return {"FINISHED"}
-
-
-# addon_keymaps = []
 
 
 def register():
