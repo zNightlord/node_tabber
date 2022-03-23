@@ -144,7 +144,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 content = json.load(f)
 
         index_offset = 0
-        node_index = -1
+        math_index = -1
+        vector_math_index = -1
+        mix_rgb_index = -1
+        boolean_math_index = -1
 
         for index, item in enumerate(nodeitems_utils.node_items_iter(context)):
             if isinstance(item, nodeitems_utils.NodeItem):
