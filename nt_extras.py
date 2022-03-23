@@ -105,3 +105,10 @@ extra_boolean_math = [
     [" BM IMPLY", "Imply (I) BOOL MATH"],
     [" BM NIMPLY", "Subtract (S) BOOL MATH"],
 ]
+
+extra_random_math = [
+    [" RV FLOAT", "Float (F) RAND VAL"],
+    [" RV INT", "Integer (I) RAND VAL"],
+    [" RV FLOAT_VECTOR", "Vector (V) RAND VAL"],
+    [" RV BOOLEAN", "Boolean (B) RAND VAL"],
+]

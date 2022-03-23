@@ -148,6 +148,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         vector_math_index = -1
         mix_rgb_index = -1
         boolean_math_index = -1
+        random_value_index = -1
 
         for index, item in enumerate(nodeitems_utils.node_items_iter(context)):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -180,6 +181,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     mix_rgb_index = index
                 if item.label == "Boolean Math":
                     boolean_math_index = index
+                if item.label == "Random Value":
+                    random_value_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -188,6 +191,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (vector_math_index, "vector math", nt_extras.extra_vector_math),
                 (mix_rgb_index, "mix rgb", nt_extras.extra_color),
                 (boolean_math_index, "boolean math", nt_extras.extra_boolean_math),
+                (random_value_index, "random value", nt_extras.extra_random_math),
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
