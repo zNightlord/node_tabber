@@ -140,10 +140,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 content = json.load(f)
 
         index_offset = 0
-        math_index = -1
-        vector_math_index = -1
-        mix_rgb_index = -1
-        boolean_math_index = -1
+        node_index = -1
 
         for index, item in enumerate(nodeitems_utils.node_items_iter(context)):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -168,25 +165,19 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 )
                 index_offset = index
 
-                if item.label == "Math":
-                    math_index = index
-                if item.label == "Vector Math":
-                    vector_math_index = index
-                if item.label == "MixRGB":
-                    mix_rgb_index = index
-                if item.label == "Boolean Math":
-                    boolean_math_index = index
+                if item.label in ["Math", "Vector Math", "MixRGB", "Boolean Math"]:
+                    node_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
             for s in [
-                (math_index, "math", nt_extras.extra_math),
-                (vector_math_index, "vector math", nt_extras.extra_vector_math),
-                (mix_rgb_index, "mix rgb", nt_extras.extra_color),
-                (boolean_math_index, "boolean math", nt_extras.extra_boolean_math),
+                ("math", nt_extras.extra_math),
+                ("vector math", nt_extras.extra_vector_math),
+                ("mix rgb", nt_extras.extra_color),
+                ("boolean math", nt_extras.extra_boolean_math),
             ]:
                 enum_items, index_offset = sub_search(
-                    enum_items, s[0], s[1], s[2], index_offset, content
+                    enum_items, node_index, s[0], s[1], index_offset, content
                 )
 
         if prefs.tally:
