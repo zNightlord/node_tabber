@@ -112,3 +112,18 @@ extra_random_value = [
     [" RV FLOAT_VECTOR", "Vector (V) RAND VAL"],
     [" RV BOOLEAN", "Boolean (B) RAND VAL"],
 ]
+
+extra_switch = [
+    [" SW FLOAT", "Float (F) SWITCH"],
+    [" SW INT", "Integer (I) SWITCH"],
+    [" SW BOOLEAN", "Boolean (B) SWITCH"],
+    [" SW VECTOR", "Vector (V) SWITCH"],
+    [" SW STRING", "String (S) SWITCH"],
+    [" SW RGBA", "Color (C) SWITCH"],
+    [" SW OBJECT", "Object (O) SWITCH"],
+    [" SW IMAGE", "Image (I) SWITCH"],
+    [" SW GEOMETRY", "Geometry (G) SWITCH"],
+    [" SW COLLECTION", "Collection (C) SWITCH"],
+    [" SW TEXTURE", "Texture (T) SWITCH"],
+    [" SW MATERIAL", "Material (M) SWITCH"],
+]

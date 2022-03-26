@@ -149,6 +149,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         mix_rgb_index = -1
         boolean_math_index = -1
         random_value_index = -1
+        switch_index = -1
 
         for index, item in enumerate(nodeitems_utils.node_items_iter(context)):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -183,6 +184,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     boolean_math_index = index
                 if item.label == "Random Value":
                     random_value_index = index
+                if item.label == "Switch":
+                    switch_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -192,6 +195,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (mix_rgb_index, "mix rgb", nt_extras.extra_color),
                 (boolean_math_index, "boolean math", nt_extras.extra_boolean_math),
                 (random_value_index, "random value", nt_extras.extra_random_value),
+                (switch_index, "switch", nt_extras.extra_switch),
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -288,6 +292,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
             if extra[0] == "RV":
                 node_active.data_type = extra[1]
+
+            if extra[0] == "SW":
+                node_active.input_type = extra[1]
 
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")
