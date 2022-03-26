@@ -11,6 +11,7 @@ Currently this fork adds additional sub node searching for the newly added vecto
 
 - Boolean Math
 - Random Value
+- Switch
 
 This also includes the fix for adding nodegroups https://github.com/jiggymoon69/node_tabber/pull/10
 
