@@ -191,7 +191,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (vector_math_index, "vector math", nt_extras.extra_vector_math),
                 (mix_rgb_index, "mix rgb", nt_extras.extra_color),
                 (boolean_math_index, "boolean math", nt_extras.extra_boolean_math),
-                (random_value_index, "random value", nt_extras.extra_random_math),
+                (random_value_index, "random value", nt_extras.extra_random_value),
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
