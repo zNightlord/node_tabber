@@ -7,11 +7,7 @@ This saves a lot of time when working with large node trees.
 
 # About this fork
 
-Currently this fork adds additional sub node searching for the newly added vector math operations and some geometry nodes:
-
-- Boolean Math
-- Random Value
-- Switch
+Currently this fork adds additional sub node searching for the newly added vector math operations and some geometry nodes.
 
 This also includes the fix for adding nodegroups https://github.com/jiggymoon69/node_tabber/pull/10
 
