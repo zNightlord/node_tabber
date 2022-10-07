@@ -5,12 +5,13 @@ Node Tabber is a Houdini/Nuke style node adding tool for Blender's Node tree gra
 Instead of having to press SHIFT+A and then scrolling the sub menus to fins the correct node, or even clicking on the search menu and maybe getting the correct node; you can just press the TAB button which will bring up an intelligent search list which even supports node acronyms. For example, typing SX would bring up the Seperate XYZ node.
 This saves a lot of time when working with large node trees.
 
-# About this fork
+# Fork
 
-Currently this fork adds additional sub node searching for the newly added vector math operations and some geometry nodes.
-
-This also includes the fix for adding nodegroups https://github.com/jiggymoon69/node_tabber/pull/10
-
+This is a fork which includes:
+- Additional sub node entries for new vector math operations
+- Geometry Nodes sub node entries (i.e. switch/random value nodes)
+- Fix for appending custom nodegroups (see https://github.com/jiggymoon69/node_tabber/pull/10)
+- Workaround for [this commit](https://github.com/blender/blender/commit/837144b4577f161baf1625f8a5478c83a088ea0f) which breaks the add-on with geonodes. See [D15973](https://developer.blender.org/D15973).
+  
 ## Installation
-
-Download this repository and install from Blender's preferences. You might need to unzip the zip file and rezip the folder for it to install properly.
+Download this repository and install from Blender's preferences. You might need to unzip the zip file and rezip (remove -master suffix) for the add-on to work properly.
