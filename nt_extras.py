@@ -1,4 +1,8 @@
 import bpy
+import itertools
+
+DATA_TYPE = ["FLOAT", "INT", "FLOAT_VECTOR", "FLOAT_COLOR", "BOOLEAN"]
+DOMAIN = ["POINT", "EDGE", "FACE", "CORNER", "CURVE", "INSTANCE"]
 
 extra_math = [
     [" M ADD", "Add (A) MATH"],
@@ -127,3 +131,8 @@ extra_switch = [
     [" SW TEXTURE", "Texture (T) SWITCH"],
     [" SW MATERIAL", "Material (M) SWITCH"],
 ]
+
+extra_capture_attr = [
+    [" CAP {} {}".format(d[0], d[1]),
+     "{} {} ({}{}) CAP ATTR".format(str.capitalize(d[0].replace("FLOAT_", "")), str.capitalize(d[1]), d[0][0], d[1][0])]
+    for d in itertools.product(DATA_TYPE, DOMAIN)]

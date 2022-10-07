@@ -154,6 +154,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         boolean_math_index = -1
         random_value_index = -1
         switch_index = -1
+        capture_attr_index = -1
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -188,6 +189,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     random_value_index = index
                 if item.label == "Switch":
                     switch_index = index
+                if item.label == "Capture Attribute":
+                    capture_attr_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -198,6 +201,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (boolean_math_index, "boolean math", nt_extras.extra_boolean_math),
                 (random_value_index, "random value", nt_extras.extra_random_value),
                 (switch_index, "switch", nt_extras.extra_switch),
+                (capture_attr_index, "capture attribute",
+                 nt_extras.extra_capture_attr)
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -218,7 +223,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         nt_debug("FIND_NODE_ITEM: Tmp : " + str(self.node_item.split()))
 
         node_item = tmp
-        extra = [self.node_item.split()[1], self.node_item.split()[2]]
+        extra = self.node_item.split()[1:]
         nice_name = " ".join(self.node_item.split()[3:])
 
         node_items = nodeitems_utils.node_items_iter(context)
@@ -241,6 +246,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         extra = self.find_node_item(context)[1]
         nice_name = self.find_node_item(context)[2]
         # Add to tally
+
         short = ""
         words = item.label.split()
         nt_debug("EXECUTE: Item label : " + str(item.label))
@@ -298,6 +304,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
             if extra[0] == "SW":
                 node_active.input_type = extra[1]
+
+            if extra[0] == "CAP":
+                node_active.data_type = extra[1]
+                node_active.domain = extra[2]
 
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel(
