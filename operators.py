@@ -4,6 +4,7 @@ import os
 import time
 import nodeitems_utils
 import pprint
+from .gn_items import geonodes_node_items
 from . import nt_extras
 from bpy.types import (
     Operator,
@@ -127,6 +128,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         enum_items.clear()
         category = context.space_data.tree_type[0]
 
+        node_items = nodeitems_utils.node_items_iter(context)
+        # new gn workaround
+
         if category == "S":
             category = "shader.json"
         if category == "C":
@@ -134,6 +138,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         if category == "T":
             category = "texture.json"
         if category == "G":
+            node_items = geonodes_node_items
             category = "geometry.json"
 
         path = os.path.dirname(__file__) + "/" + category
@@ -151,9 +156,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         random_value_index = -1
         switch_index = -1
 
-        for index, item in enumerate(nodeitems_utils.node_items_iter(context)):
+        for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
-
                 # nt_debug(str(item.label))
                 short = ""
                 tally = 0
@@ -221,7 +225,12 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         # nt_debug ("Third ? :" + str(self.node_item.split()[3:]))
         nice_name = " ".join(self.node_item.split()[3:])
 
-        for index, item in enumerate(nodeitems_utils.node_items_iter(context)):
+        node_items = nodeitems_utils.node_items_iter(context)
+
+        if context.space_data.tree_type == "GeometryNodeTree":
+            node_items = geonodes_node_items
+
+        for index, item in enumerate(node_items):
             # nt_debug("DEF: find_node_item")
             if index == node_item:
                 return [item, extra, nice_name]
