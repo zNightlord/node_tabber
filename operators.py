@@ -129,7 +129,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         category = context.space_data.tree_type[0]
 
         node_items = nodeitems_utils.node_items_iter(context)
-        # new gn workaround
 
         if category == "S":
             category = "shader.json"
@@ -158,7 +157,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
-                # nt_debug(str(item.label))
                 short = ""
                 tally = 0
                 words = item.label.split()
@@ -221,8 +219,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
         node_item = tmp
         extra = [self.node_item.split()[1], self.node_item.split()[2]]
-        # nt_debug ("First extra :" + str(extra))
-        # nt_debug ("Third ? :" + str(self.node_item.split()[3:]))
         nice_name = " ".join(self.node_item.split()[3:])
 
         node_items = nodeitems_utils.node_items_iter(context)
@@ -231,7 +227,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             node_items = geonodes_node_items
 
         for index, item in enumerate(node_items):
-            # nt_debug("DEF: find_node_item")
             if index == node_item:
                 return [item, extra, nice_name]
         return None
@@ -246,7 +241,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         extra = self.find_node_item(context)[1]
         nice_name = self.find_node_item(context)[2]
         # Add to tally
-        # write_score(item.nodetype[0], self._enum_item_hack[int(self.node_item)][1])
         short = ""
         words = item.label.split()
         nt_debug("EXECUTE: Item label : " + str(item.label))
@@ -306,7 +300,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.input_type = extra[1]
 
             if not prefs.quick_place:
-                bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")
+                bpy.ops.node.translate_attach_remove_on_cancel(
+                    "INVOKE_DEFAULT")
 
             nt_debug("Time taken: " + str(time.perf_counter() - startTime))
             return {"FINISHED"}
@@ -321,7 +316,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         if node_type is None:
             node_type = self.type
 
-        # print("Node Type: " + str(node_type))
         # select only the new node
         for n in tree.nodes:
             n.select = False
@@ -358,7 +352,8 @@ class NODE_OT_reset_tally(bpy.types.Operator):
     bl_label = "Reset node tally count"
 
     def execute(self, context):
-        categories = ["shader.json", "compositor.json", "texture.json", "geometry.json"]
+        categories = ["shader.json", "compositor.json",
+                      "texture.json", "geometry.json"]
         reset = False
         for cat in categories:
             path = os.path.dirname(__file__) + "/" + cat
