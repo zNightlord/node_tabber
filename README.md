@@ -14,4 +14,4 @@ This is a fork which includes:
 - Workaround for [this commit](https://github.com/blender/blender/commit/837144b4577f161baf1625f8a5478c83a088ea0f) which breaks the add-on with geonodes. See [D15973](https://developer.blender.org/D15973).
   
 ## Installation
-Download this repository and install from Blender's preferences, just like any other add-on (no need to unzip)
+Download this repository([link](https://github.com/williamchange/node_tabber/archive/refs/heads/master.zip)) and install from Blender's preferences, just like any other add-on (no need to unzip)
