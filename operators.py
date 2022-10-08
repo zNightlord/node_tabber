@@ -1,11 +1,15 @@
 import bpy
 import json
-import os
+
 import time
+
 import nodeitems_utils
 import pprint
 from .gn_items import geonodes_node_items
 from . import nt_extras
+
+import os
+import pathlib
 
 from bpy.types import (
     Operator,
@@ -19,9 +23,11 @@ from bpy.props import (
     StringProperty,
 )
 
+ADD_ON_PATH = pathlib.PurePath(os.path.dirname(__file__)).name
+
 
 def nt_debug(msg):
-    addon = bpy.context.preferences.addons["node_tabber"]
+    addon = bpy.context.preferences.addons[ADD_ON_PATH]
     prefs = addon.preferences
 
     if prefs.nt_debug:
@@ -35,7 +41,7 @@ def take_fifth(elem):
 
 
 def write_score(category, enum_items):
-    addon = bpy.context.preferences.addons["node_tabber"]
+    addon = bpy.context.preferences.addons[ADD_ON_PATH]
     prefs = addon.preferences
 
     if category == "S":
@@ -116,7 +122,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         nt_debug("DEF: node_enum_items")
         enum_items = NODE_OT_add_tabber_search._enum_item_hack
 
-        addon = bpy.context.preferences.addons["node_tabber"]
+        addon = bpy.context.preferences.addons[ADD_ON_PATH]
         prefs = addon.preferences
 
         enum_items.clear()
@@ -254,7 +260,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
     def execute(self, context):
         nt_debug("DEF: execute")
         startTime = time.perf_counter()
-        addon = bpy.context.preferences.addons["node_tabber"]
+        addon = bpy.context.preferences.addons[ADD_ON_PATH]
         prefs = addon.preferences
 
         _find_node_item = self.find_node_item(context)
