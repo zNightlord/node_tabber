@@ -6,6 +6,7 @@ import nodeitems_utils
 import pprint
 from .gn_items import geonodes_node_items
 from . import nt_extras
+
 from bpy.types import (
     Operator,
     PropertyGroup,
@@ -110,13 +111,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
     _enum_item_hack = []
 
-    def node_enum_items2(self, context):
-        for index, item in enumerate(nodeitems_utils.node_items_iter(context)):
-            if isinstance(item, nodeitems_utils.NodeItem):
-                print(str(index) + " : " + str(item.label))
-
-        return None
-
     # Create an enum list from node items
     def node_enum_items(self, context):
         nt_debug("DEF: node_enum_items")
@@ -137,7 +131,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         if category == "T":
             category = "texture.json"
         if category == "G":
-            node_items = geonodes_node_items
+            node_items = geonodes_node_items(context)
             category = "geometry.json"
 
         path = os.path.dirname(__file__) + "/" + category
@@ -148,6 +142,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 content = json.load(f)
 
         index_offset = 0
+
         math_index = -1
         vector_math_index = -1
         mix_rgb_index = -1
@@ -229,11 +224,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         node_item = tmp
         extra = self.node_item.split()[1:]
         nice_name = " ".join(self.node_item.split()[3:])
-
         node_items = nodeitems_utils.node_items_iter(context)
 
         if context.space_data.tree_type == "GeometryNodeTree":
-            node_items = geonodes_node_items
+            node_items = geonodes_node_items(context)
 
         for index, item in enumerate(node_items):
             if index == node_item:
@@ -241,6 +235,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         return None
 
     def execute(self, context):
+        print("started")
         nt_debug("DEF: execute")
         startTime = time.perf_counter()
         addon = bpy.context.preferences.addons["node_tabber"]
@@ -249,8 +244,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         item = self.find_node_item(context)[0]
         extra = self.find_node_item(context)[1]
         nice_name = self.find_node_item(context)[2]
-        # Add to tally
 
+        # Add to tally
         short = ""
         words = item.label.split()
         nt_debug("EXECUTE: Item label : " + str(item.label))
