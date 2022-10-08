@@ -241,9 +241,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         addon = bpy.context.preferences.addons["node_tabber"]
         prefs = addon.preferences
 
-        item = self.find_node_item(context)[0]
-        extra = self.find_node_item(context)[1]
-        nice_name = self.find_node_item(context)[2]
+        _find_node_item = self.find_node_item(context)
+        item = _find_node_item[0]
+        extra = _find_node_item[1]
+        nice_name = _find_node_item[2]
 
         # Add to tally
         short = ""
