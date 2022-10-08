@@ -178,7 +178,7 @@ def geonodes_node_items(context):
         NodeItem("GeometryNodeFieldOnDomain"),
         NodeItem("ShaderNodeMapRange"),
         NodeItem("ShaderNodeMath"),
-        NodeItem("ShaderNodeMix"),
+        # NodeItem("ShaderNodeMix"),
         NodeItem("FunctionNodeRandomValue"),
         NodeItem("FunctionNodeRotateEuler"),
         NodeItem("GeometryNodeSwitch"),

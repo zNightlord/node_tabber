@@ -9,7 +9,8 @@ def gen_attr_subnode_entries(a, b):
     return [
         [" {} {} {}".format(a, d[0], d[1]),
          "{} {} ({}{}) {}".format(
-            str.capitalize(d[0].replace("FLOAT_", "")),
+            str.capitalize(d[0].replace(
+                "FLOAT_", "").replace("INT", "integer")),
             str.capitalize(d[1]),
             d[0][0],
             d[1][0],
@@ -156,6 +157,9 @@ com_col = [
     [" COM HSV", "HSV (CH) COM HSV"],
     [" COM HSL", "HSL (CL) COM HSL"]
 ]
+
+named_attr = [[" NA {}".format(d), "{} ({}) NAMED ATTR".format(str.capitalize(
+    d.replace("FLOAT_", "").replace("INT", "Integer")), d[0])] for d in DATA_TYPE]
 
 capture_attr = gen_attr_subnode_entries("CAP", "CAP ATTR")
 interpolate_dom = gen_attr_subnode_entries("INTER", "INTERPOLATE DOM")

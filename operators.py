@@ -153,6 +153,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         sep_col_index = -1
         com_col_index = -1
         interpolate_dom_index = -1
+        named_attr_index = -1
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -195,6 +196,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     com_col_index = index
                 if item.label == "Interpolate Domain":
                     interpolate_dom_index = index
+                if item.label == "Named Attribute":
+                    named_attr_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -210,7 +213,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (sep_col_index, "separate color", nt_extras.sep_col),
                 (com_col_index, "combine color", nt_extras.com_col),
                 (interpolate_dom_index, "interpolate domain",
-                 nt_extras.interpolate_dom)
+                 nt_extras.interpolate_dom),
+                (named_attr_index, "named attribute", nt_extras.named_attr)
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -312,8 +316,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if extra[0] == "RV":
                 node_active.data_type = extra[1]
 
-            if extra[0] == "SW":
-                node_active.input_type = extra[1]
+            if extra[0] in ["NA", "SW"]:
+                node_active.data_type = extra[1]
 
             if extra[0] in ["CAP", "INTER"]:
                 node_active.data_type = extra[1]
