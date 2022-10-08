@@ -319,10 +319,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.data_type = extra[1]
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
-            if extra[0] == "SEP":
-                node_active.mode = extra[1]
-
-            if extra[0] == "COM":
+            if extra[0] in ["SEP", "COM"]:
                 node_active.mode = extra[1]
 
             if not prefs.quick_place:
