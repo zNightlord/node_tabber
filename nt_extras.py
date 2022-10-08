@@ -4,6 +4,19 @@ import itertools
 DATA_TYPE = ["FLOAT", "INT", "FLOAT_VECTOR", "FLOAT_COLOR", "BOOLEAN"]
 DOMAIN = ["POINT", "EDGE", "FACE", "CORNER", "SPLINE", "INSTANCE"]
 
+
+def gen_attr_subnode_entries(a, b):
+    return [
+        [" {} {} {}".format(a, d[0], d[1]),
+         "{} {} ({}{}) {}".format(
+            str.capitalize(d[0].replace("FLOAT_", "")),
+            str.capitalize(d[1]),
+            d[0][0],
+            d[1][0],
+            b)]
+        for d in itertools.product(DATA_TYPE, DOMAIN)]
+
+
 math = [
     [" M ADD", "Add (A) MATH"],
     [" M SUBTRACT", "Subtract (S) MATH"],
@@ -144,7 +157,4 @@ com_col = [
     [" COM HSL", "HSL (CL) COM HSL"]
 ]
 
-capture_attr = [
-    [" CAP {} {}".format(d[0], d[1]),
-     "{} {} ({}{}) CAP ATTR".format(str.capitalize(d[0].replace("FLOAT_", "")), str.capitalize(d[1]), d[0][0], d[1][0])]
-    for d in itertools.product(DATA_TYPE, DOMAIN)]
+capture_attr = gen_attr_subnode_entries("CAP", "CAP ATTR")
