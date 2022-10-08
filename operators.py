@@ -151,6 +151,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         switch_index = -1
         capture_attr_index = -1
         sep_col_index = -1
+        com_col_index = -1
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -189,6 +190,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     capture_attr_index = index
                 if item.label == "Separate Color":
                     sep_col_index = index
+                if item.label == "Combine Color":
+                    com_col_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -201,7 +204,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (switch_index, "switch", nt_extras.switch),
                 (capture_attr_index, "capture attribute",
                  nt_extras.capture_attr),
-                (sep_col_index, "separate color", nt_extras.sep_col)
+                (sep_col_index, "separate color", nt_extras.sep_col),
+                (com_col_index, "combine color", nt_extras.com_col)
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -311,6 +315,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
             if extra[0] == "SEP":
+                node_active.mode = extra[1]
+
+            if extra[0] == "COM":
                 node_active.mode = extra[1]
 
             if not prefs.quick_place:

@@ -138,6 +138,12 @@ sep_col = [
     [" SEP HSL", "HSL (SL) SEP HSL"]
 ]
 
+com_col = [
+    [" COM RGB", "RGB (CR) COM RGB"],
+    [" COM HSV", "HSV (CH) COM HSV"],
+    [" COM HSL", "HSL (CL) COM HSL"]
+]
+
 capture_attr = [
     [" CAP {} {}".format(d[0], d[1]),
      "{} {} ({}{}) CAP ATTR".format(str.capitalize(d[0].replace("FLOAT_", "")), str.capitalize(d[1]), d[0][0], d[1][0])]
