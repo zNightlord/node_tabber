@@ -177,7 +177,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     math_index = index
                 if item.label == "Vector Math":
                     vector_math_index = index
-                if item.label == "MixRGB":
+                if item.label == "Mix":
                     mix_rgb_index = index
                 if item.label == "Boolean Math":
                     boolean_math_index = index
@@ -195,7 +195,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             for s in [
                 (math_index, "math", nt_extras.math),
                 (vector_math_index, "vector math", nt_extras.vector_math),
-                (mix_rgb_index, "mix rgb", nt_extras.color),
+                (mix_rgb_index, "mix", nt_extras.color),
                 (boolean_math_index, "boolean math", nt_extras.boolean_math),
                 (random_value_index, "random value", nt_extras.random_value),
                 (switch_index, "switch", nt_extras.switch),
@@ -297,6 +297,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.operation = extra[1]
 
             if extra[0] == "C":
+                node_active.data_type = 'RGBA'
                 node_active.blend_type = extra[1]
 
             if extra[0] == "RV":
