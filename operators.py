@@ -307,7 +307,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
             if extra[0] == "CAP":
                 node_active.data_type = extra[1]
-                node_active.domain = extra[2]
+                node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
             if extra[0] == "SEP":
                 node_active.mode = extra[1]

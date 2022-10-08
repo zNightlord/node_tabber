@@ -2,7 +2,7 @@ import bpy
 import itertools
 
 DATA_TYPE = ["FLOAT", "INT", "FLOAT_VECTOR", "FLOAT_COLOR", "BOOLEAN"]
-DOMAIN = ["POINT", "EDGE", "FACE", "CORNER", "CURVE", "INSTANCE"]
+DOMAIN = ["POINT", "EDGE", "FACE", "CORNER", "SPLINE", "INSTANCE"]
 
 math = [
     [" M ADD", "Add (A) MATH"],
