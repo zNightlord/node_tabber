@@ -4,7 +4,7 @@ import itertools
 DATA_TYPE = ["FLOAT", "INT", "FLOAT_VECTOR", "FLOAT_COLOR", "BOOLEAN"]
 DOMAIN = ["POINT", "EDGE", "FACE", "CORNER", "CURVE", "INSTANCE"]
 
-extra_math = [
+math = [
     [" M ADD", "Add (A) MATH"],
     [" M SUBTRACT", "Subtract (S) MATH"],
     [" M MULTIPLY", "Multiply (M) MATH"],
@@ -47,7 +47,7 @@ extra_math = [
     [" M DEGREES", "To Degrees (TD) MATH"],
 ]
 
-extra_vector_math = [
+vector_math = [
     [" VM ADD", "Add (A) VEC MATH"],
     [" VM SUBTRACT", "Subtract (S) VEC MATH"],
     [" VM MULTIPLY", "Multiply (M) VEC MATH"],
@@ -77,7 +77,7 @@ extra_vector_math = [
     [" VM TANGENT", "Tangent (T) VEC MATH"],
 ]
 
-extra_color = [
+color = [
     [" C VALUE", "Value (V) COLOR"],
     [" C COLOR", "Color (C) COLOR"],
     [" C SATURATION", "Saturation (S) COLOR"],
@@ -98,7 +98,7 @@ extra_color = [
     [" C MIX", "Mix (M) COLOR"],
 ]
 
-extra_boolean_math = [
+boolean_math = [
     [" BM AND", "And (A) BOOL MATH"],
     [" BM OR", "Or (O) BOOL MATH"],
     [" BM NOT", "Not (N) BOOL MATH"],
@@ -110,14 +110,14 @@ extra_boolean_math = [
     [" BM NIMPLY", "Subtract (S) BOOL MATH"],
 ]
 
-extra_random_value = [
+random_value = [
     [" RV FLOAT", "Float (F) RAND VAL"],
     [" RV INT", "Integer (I) RAND VAL"],
     [" RV FLOAT_VECTOR", "Vector (V) RAND VAL"],
     [" RV BOOLEAN", "Boolean (B) RAND VAL"],
 ]
 
-extra_switch = [
+switch = [
     [" SW FLOAT", "Float (F) SWITCH"],
     [" SW INT", "Integer (I) SWITCH"],
     [" SW BOOLEAN", "Boolean (B) SWITCH"],
@@ -132,13 +132,13 @@ extra_switch = [
     [" SW MATERIAL", "Material (M) SWITCH"],
 ]
 
-extra_sep_col = [
+sep_col = [
     [" SEP RGB", "RGB (SR) SEP RGB"],
     [" SEP HSV", "HSV (SH) SEP HSV"],
     [" SEP HSL", "HSL (SL) SEP HSL"]
 ]
 
-extra_capture_attr = [
+capture_attr = [
     [" CAP {} {}".format(d[0], d[1]),
      "{} {} ({}{}) CAP ATTR".format(str.capitalize(d[0].replace("FLOAT_", "")), str.capitalize(d[1]), d[0][0], d[1][0])]
     for d in itertools.product(DATA_TYPE, DOMAIN)]

@@ -198,15 +198,15 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         # Add sub node searching if enabled
         if prefs.sub_search:
             for s in [
-                (math_index, "math", nt_extras.extra_math),
-                (vector_math_index, "vector math", nt_extras.extra_vector_math),
-                (mix_rgb_index, "mix rgb", nt_extras.extra_color),
-                (boolean_math_index, "boolean math", nt_extras.extra_boolean_math),
-                (random_value_index, "random value", nt_extras.extra_random_value),
-                (switch_index, "switch", nt_extras.extra_switch),
+                (math_index, "math", nt_extras.math),
+                (vector_math_index, "vector math", nt_extras.vector_math),
+                (mix_rgb_index, "mix rgb", nt_extras.color),
+                (boolean_math_index, "boolean math", nt_extras.boolean_math),
+                (random_value_index, "random value", nt_extras.random_value),
+                (switch_index, "switch", nt_extras.switch),
                 (capture_attr_index, "capture attribute",
-                 nt_extras.extra_capture_attr),
-                (sep_col_index, "separate color", nt_extras.extra_sep_col)
+                 nt_extras.capture_attr),
+                (sep_col_index, "separate color", nt_extras.sep_col)
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
