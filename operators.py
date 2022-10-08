@@ -154,6 +154,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         com_col_index = -1
         interpolate_dom_index = -1
         named_attr_index = -1
+        raycast_index = -1
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -198,6 +199,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     interpolate_dom_index = index
                 if item.label == "Named Attribute":
                     named_attr_index = index
+                if item.label == "Raycast":
+                    raycast_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -214,7 +217,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (com_col_index, "combine color", nt_extras.com_col),
                 (interpolate_dom_index, "interpolate domain",
                  nt_extras.interpolate_dom),
-                (named_attr_index, "named attribute", nt_extras.named_attr)
+                (named_attr_index, "named attribute", nt_extras.named_attr),
+                (raycast_index, "raycast", nt_extras.raycast)
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -248,7 +252,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         return None
 
     def execute(self, context):
-        print("started")
         nt_debug("DEF: execute")
         startTime = time.perf_counter()
         addon = bpy.context.preferences.addons["node_tabber"]
@@ -322,6 +325,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
             if extra[0] in ["SEP", "COM"]:
                 node_active.mode = extra[1]
+
+            if extra[0] == "RAY":
+                node_active.data_type = extra[1]
+                node_active.mapping = extra[2]
 
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel(
