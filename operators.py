@@ -155,6 +155,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         random_value_index = -1
         switch_index = -1
         capture_attr_index = -1
+        sep_col_index = -1
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -191,6 +192,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     switch_index = index
                 if item.label == "Capture Attribute":
                     capture_attr_index = index
+                if item.label == "Separate Color":
+                    sep_col_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -202,7 +205,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (random_value_index, "random value", nt_extras.extra_random_value),
                 (switch_index, "switch", nt_extras.extra_switch),
                 (capture_attr_index, "capture attribute",
-                 nt_extras.extra_capture_attr)
+                 nt_extras.extra_capture_attr),
+                (sep_col_index, "separate color", nt_extras.extra_sep_col)
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -308,6 +312,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if extra[0] == "CAP":
                 node_active.data_type = extra[1]
                 node_active.domain = extra[2]
+
+            if extra[0] == "SEP":
+                node_active.mode = extra[1]
 
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel(

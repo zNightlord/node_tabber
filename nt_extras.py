@@ -132,6 +132,12 @@ extra_switch = [
     [" SW MATERIAL", "Material (M) SWITCH"],
 ]
 
+extra_sep_col = [
+    [" SEP RGB", "RGB (SR) SEP RGB"],
+    [" SEP HSV", "HSV (SH) SEP HSV"],
+    [" SEP HSL", "HSL (SL) SEP HSL"]
+]
+
 extra_capture_attr = [
     [" CAP {} {}".format(d[0], d[1]),
      "{} {} ({}{}) CAP ATTR".format(str.capitalize(d[0].replace("FLOAT_", "")), str.capitalize(d[1]), d[0][0], d[1][0])]
