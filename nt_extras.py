@@ -158,3 +158,4 @@ com_col = [
 ]
 
 capture_attr = gen_attr_subnode_entries("CAP", "CAP ATTR")
+interpolate_dom = gen_attr_subnode_entries("INTER", "INTERPOLATE DOM")

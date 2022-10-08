@@ -152,6 +152,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         capture_attr_index = -1
         sep_col_index = -1
         com_col_index = -1
+        interpolate_dom_index = -1
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -192,6 +193,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     sep_col_index = index
                 if item.label == "Combine Color":
                     com_col_index = index
+                if item.label == "Interpolate Domain":
+                    interpolate_dom_index = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -205,7 +208,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (capture_attr_index, "capture attribute",
                  nt_extras.capture_attr),
                 (sep_col_index, "separate color", nt_extras.sep_col),
-                (com_col_index, "combine color", nt_extras.com_col)
+                (com_col_index, "combine color", nt_extras.com_col),
+                (interpolate_dom_index, "interpolate domain",
+                 nt_extras.interpolate_dom)
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -310,7 +315,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if extra[0] == "SW":
                 node_active.input_type = extra[1]
 
-            if extra[0] == "CAP":
+            if extra[0] in ["CAP", "INTER"]:
                 node_active.data_type = extra[1]
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
