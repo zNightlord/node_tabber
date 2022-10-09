@@ -13,7 +13,7 @@ def replace_dtype_labels(string):
     return string.replace("FLOAT_", "").replace("INT", "integer")
 
 
-def gen_gn_subnode_entries(a, b, setting1, setting2):
+def gen_subnodes(a, b, setting1, setting2):
     return [
         [
             " {} {} {}".format(a, d[0], d[1]),
@@ -29,7 +29,7 @@ def gen_gn_subnode_entries(a, b, setting1, setting2):
     ]
 
 
-def gen_gn_data_type_subnode_entries(a, b, setting1):
+def gen_dtype_subnodes(a, b, setting1):
     return [
         [
             " {} {}".format(a, d),
@@ -40,6 +40,13 @@ def gen_gn_data_type_subnode_entries(a, b, setting1):
             ),
         ]
         for d in DATA_TYPE
+    ]
+
+
+def gen_non_dtype_subnodes(a, b, setting1):
+    return [
+        [" {} {}".format(a, d), "{} ({}) {}".format(str.capitalize(d), d[0], b)]
+        for d in setting1
     ]
 
 
@@ -184,37 +191,17 @@ com_col = [
 ]
 
 
-dom_size = [
-    [" DS {}".format(d), "{} ({}) DOMAIN SIZE".format(str.capitalize(d), d[0])]
-    for d in COMPONENT
-]
+dom_size = gen_non_dtype_subnodes("DS", "DOMAIN SIZE", COMPONENT)
+geo_prox = gen_non_dtype_subnodes("GPX", "GEO PROX", TARGET_EL)
+sample_nearest = gen_non_dtype_subnodes("SN", "SAMPLE NEAREST", DOMAIN[:4])
 
+named_attr = gen_dtype_subnodes("NA", "NAMED ATTR", DATA_TYPE)
+sample_uv_surf = gen_dtype_subnodes("SUS", "SAMPLE UV SURF", DATA_TYPE)
+sample_nearest_surf = gen_dtype_subnodes("SNS", "SAMPLE NEAREST SURF", DATA_TYPE)
 
-geo_prox = [
-    [" GPX {}".format(d), "{} ({}) GEO PROX".format(str.capitalize(d), d[0])]
-    for d in TARGET_EL
-]
-
-sample_nearest = [
-    [
-        " SN {}".format(d),
-        "{} ({}) SAMPLE NEAREST".format(str.capitalize(d), d[0]),
-    ]
-    for d in DOMAIN[:4]
-]
-
-named_attr = gen_gn_data_type_subnode_entries("NA", "NAMED ATTR", DATA_TYPE)
-
-sample_nearest_surf = gen_gn_data_type_subnode_entries(
-    "SNS", "SAMPLE NEAREST SURF", DATA_TYPE
-)
-sample_uv_surf = gen_gn_data_type_subnode_entries("SUS", "SAMPLE UV SURF", DATA_TYPE)
-
-attr_stat = gen_gn_subnode_entries(
-    "AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN
-)
-raycast = gen_gn_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
-store_named_attr = gen_gn_subnode_entries("STO", "STORE", DATA_TYPE, DOMAIN)
-capture_attr = gen_gn_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
-interpolate_dom = gen_gn_subnode_entries("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
-sample_index = gen_gn_subnode_entries("SIN", "SAMPLE INDEX", DATA_TYPE, DOMAIN)
+attr_stat = gen_subnodes("AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN)
+raycast = gen_subnodes("RAY", "RAYCAST", DATA_TYPE, MAPPING)
+store_named_attr = gen_subnodes("STO", "STORE", DATA_TYPE, DOMAIN)
+capture_attr = gen_subnodes("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
+interpolate_dom = gen_subnodes("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
+sample_index = gen_subnodes("SIN", "SAMPLE INDEX", DATA_TYPE, DOMAIN)
