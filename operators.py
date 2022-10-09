@@ -181,7 +181,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 (item_index["Vector Math"], "vector math", nt_extras.vec_math),
                 (item_index["Mix"], "mix", nt_extras.color),
                 (item_index["Boolean Math"], "boolean math", nt_extras.bool_math),
-                (item_index["Random Value"], "random value", nt_extras.rand_value),
+                (item_index["Random Value"], "random value", nt_extras.rand_val),
                 (item_index["Switch"], "switch", nt_extras.switch),
                 (
                     item_index["Capture Attribute"],
