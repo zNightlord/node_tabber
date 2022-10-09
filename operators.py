@@ -201,6 +201,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     "interpolate domain",
                     nt_extras.interpolate_dom,
                 ),
+                (item_index["Domain Size"], "domain size", nt_extras.dom_size),
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -311,6 +312,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if extra[0] == "RAY":
                 node_active.data_type = extra[1]
                 node_active.mapping = extra[2]
+
+            if extra[0] == "DS":
+                node_active.component = extra[1]
 
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")

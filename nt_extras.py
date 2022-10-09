@@ -5,6 +5,7 @@ DATA_TYPE = ["FLOAT", "INT", "FLOAT_VECTOR", "FLOAT_COLOR", "BOOLEAN"]
 DOMAIN = ["POINT", "EDGE", "FACE", "CORNER", "SPLINE", "INSTANCE"]
 MAPPING = ["INTERPOLATED", "NEAREST"]
 COMPONENT = ["MESH", "POINTCLOUD", "CURVE", "INSTANCES"]
+SPLINE_TYPE = ["CATMULL_ROM", "POLY", "BEZIER", "NURBS"]
 
 
 def gen_gn_subnode_entries(a, b, setting1, setting2):
@@ -162,7 +163,12 @@ com_col = [
     [" COM HSV", "HSV (CH) COM HSV"],
     [" COM HSL", "HSL (CL) COM HSL"],
 ]
-raycast = gen_gn_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
+
+
+dom_size = [
+    [" DS {}".format(d), "{} ({}) DOMAIN SIZE".format(str.capitalize(d), d[0])]
+    for d in COMPONENT
+]
 
 named_attr = [
     [
@@ -174,5 +180,6 @@ named_attr = [
     for d in DATA_TYPE
 ]
 
+raycast = gen_gn_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
 capture_attr = gen_gn_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
 interpolate_dom = gen_gn_subnode_entries("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
