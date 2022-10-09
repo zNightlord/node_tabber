@@ -29,7 +29,7 @@ def gen_subnodes(a, b, setting1, setting2):
     ]
 
 
-def gen_dtype_subnodes(a, b, setting1):
+def gen_dtype_subnodes(a, b):
     return [
         [
             " {} {}".format(a, d),
@@ -195,9 +195,9 @@ dom_size = gen_non_dtype_subnodes("DS", "DOMAIN SIZE", COMPONENT)
 geo_prox = gen_non_dtype_subnodes("GPX", "GEO PROX", TARGET_EL)
 sample_nearest = gen_non_dtype_subnodes("SN", "SAMPLE NEAREST", DOMAIN[:4])
 
-named_attr = gen_dtype_subnodes("NA", "NAMED ATTR", DATA_TYPE)
-sample_uv_surf = gen_dtype_subnodes("SUS", "SAMPLE UV SURF", DATA_TYPE)
-sample_nearest_surf = gen_dtype_subnodes("SNS", "SAMPLE NEAREST SURF", DATA_TYPE)
+named_attr = gen_dtype_subnodes("NA", "NAMED ATTR")
+sample_uv_surf = gen_dtype_subnodes("SUS", "SAMPLE UV SURF")
+sample_nearest_surf = gen_dtype_subnodes("SNS", "SAMPLE NEAREST SURF")
 
 attr_stat = gen_subnodes("AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN)
 raycast = gen_subnodes("RAY", "RAYCAST", DATA_TYPE, MAPPING)
