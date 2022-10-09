@@ -299,8 +299,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.data_type = "RGBA"
                 node_active.blend_type = extra[1]
 
-            if extra[0] in ["NA", "SW", "RV"]:
+            if extra[0] in ["NA", "RV"]:
                 node_active.data_type = extra[1]
+
+            if extra[0] in ["SW"]:
+                node_active.input_type = extra[1]
 
             if extra[0] in ["CAP", "INTER"]:
                 node_active.data_type = extra[1]
