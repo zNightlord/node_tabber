@@ -8,6 +8,7 @@ COMPONENT = ["MESH", "POINTCLOUD", "CURVE", "INSTANCES"]
 SPLINE_TYPE = ["CATMULL_ROM", "POLY", "BEZIER", "NURBS"]
 TARGET_EL = ["POINTS", "EDGES", "FACES"]
 INTERPOLATION = ["LINEAR", "STEPPED", "SMOOTHSTEP", "SMOOTHERSTEP"]
+OPERATION = ["INTERSECT", "UNION", "DIFFERENCE"]
 
 
 def replace_dtype_labels(string):
@@ -197,6 +198,7 @@ geo_prox = gen_non_dtype_subnodes("GPX", "GEO PROX", TARGET_EL)
 sample_nearest = gen_non_dtype_subnodes("SN", "SAMPLE NEAREST", DOMAIN[:4])
 set_spline_type = gen_non_dtype_subnodes("SPT", "SET SPLINE TYPE", SPLINE_TYPE)
 merge_by_dist = gen_non_dtype_subnodes("MbD", "MERGE BY DIST", ["ALL", "CONNECTED"])
+mesh_boolean = gen_non_dtype_subnodes("MB", "Mesh Boolean", OPERATION)
 
 named_attr = gen_dtype_subnodes("NA", "NAMED ATTR")
 sample_uv_surf = gen_dtype_subnodes("SUS", "SAMPLE UV SURF")
