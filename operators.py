@@ -352,7 +352,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
             # Store Named Attribute
             if key == "STO":
-                node_active.data_type = extra[1].replace("FLOAT_", "BYTE_")
+                node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR")
                 node_active.domain = extra[2]
 
             # Switch
