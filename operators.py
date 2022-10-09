@@ -166,6 +166,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             "Attribute Statistic": -1,
             "Geometry Proximity": -1,
             "Sample Nearest": -1,
+            "Sample Nearest Surface": -1,
+            "Sample UV Surface": -1,
         }
 
         for index, item in enumerate(node_items):
@@ -239,6 +241,16 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     item_index["Sample Nearest"],
                     "sample nearest",
                     nt_extras.sample_nearest,
+                ),
+                (
+                    item_index["Sample Nearest Surface"],
+                    "sample nearest surface",
+                    nt_extras.sample_nearest_surf,
+                ),
+                (
+                    item_index["Sample UV Surface"],
+                    "sample uv surface",
+                    nt_extras.sample_uv_surf,
                 ),
             ]:
                 enum_items, index_offset = sub_search(
@@ -348,15 +360,19 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             # Attribute Statistic / Sample Index
             if key in ["AST", "SIN"]:
                 node_active.data_type = extra[1]
-                node_active.domain = extra[2]
+                node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
             # Store Named Attribute
             if key == "STO":
                 node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR")
-                node_active.domain = extra[2]
+                node_active.domain = extra[2].replace("SPLINE", "CURVE")
+
+            # Sample Nearest Surface / Sample UV Surface
+            if key in ["SNS", "SUS"]:
+                node_active.data_type = extra[1]
 
             # Switch
-            if key in ["SW"]:
+            if key == "SW":
                 node_active.input_type = extra[1]
 
             # Geometry Proximity

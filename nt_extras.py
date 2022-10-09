@@ -175,17 +175,12 @@ named_attr = [
     [
         " NA {}".format(d),
         "{} ({}) NAMED ATTR".format(
-            str.capitalize(d.replace("FLOAT_", "").replace("INT", "Integer")), d[0]
+            str.capitalize(d.replace("FLOAT_", "").replace("INT", "integer")), d[0]
         ),
     ]
     for d in DATA_TYPE
 ]
 
-raycast = gen_gn_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
-store_named_attr = gen_gn_subnode_entries("STO", "STORE", DATA_TYPE, DOMAIN)
-capture_attr = gen_gn_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
-interpolate_dom = gen_gn_subnode_entries("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
-sample_index = gen_gn_subnode_entries("SIN", "SAMPLE INDEX", DATA_TYPE, DOMAIN)
 
 geo_prox = [
     [" GPX {}".format(d), "{} ({}) GEO PROX".format(str.capitalize(d), d[0])]
@@ -193,10 +188,38 @@ geo_prox = [
 ]
 
 sample_nearest = [
-    [" SN {}".format(d), "{} ({}) SAMPLE NEAREST".format(str.capitalize(d), d[0])]
+    [
+        " SN {}".format(d),
+        "{} ({}) SAMPLE NEAREST".format(str.capitalize(d), d[0]),
+    ]
     for d in DOMAIN[:4]
+]
+
+sample_nearest_surf = [
+    [
+        " SNS {}".format(d),
+        "{} ({}) SAMPLE NEAREST SURF".format(
+            str.capitalize(d.replace("INT", "integer")), d[0]
+        ),
+    ]
+    for d in DATA_TYPE
+]
+
+sample_uv_surf = [
+    [
+        " SUS {}".format(d),
+        "{} ({}) SAMPLE UV SURF".format(
+            str.capitalize(d.replace("FLOAT_", "").replace("INT", "integer")), d[0]
+        ),
+    ]
+    for d in DATA_TYPE
 ]
 
 attr_stat = gen_gn_subnode_entries(
     "AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN
 )
+raycast = gen_gn_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
+store_named_attr = gen_gn_subnode_entries("STO", "STORE", DATA_TYPE, DOMAIN)
+capture_attr = gen_gn_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
+interpolate_dom = gen_gn_subnode_entries("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
+sample_index = gen_gn_subnode_entries("SIN", "SAMPLE INDEX", DATA_TYPE, DOMAIN)
