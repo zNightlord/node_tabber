@@ -371,7 +371,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.blend_type = extra[1]
 
             # Named Attribute / Random Value
-            if key in ["NA", "RV"]:
+            # Sample Nearest Surface / Sample UV Surface
+            if key in ["NA", "RV", "SNS", "SUS"]:
                 node_active.data_type = extra[1]
 
             # Attribute Statistic / Sample Index
@@ -383,10 +384,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if key == "STO":
                 node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR")
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
-
-            # Sample Nearest Surface / Sample UV Surface
-            if key in ["SNS", "SUS"]:
-                node_active.data_type = extra[1]
 
             # Switch
             if key == "SW":
