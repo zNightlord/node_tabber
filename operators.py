@@ -305,31 +305,41 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             node_active = context.active_node
             node_selected = context.selected_nodes
 
-            if extra[0] in ["M", "VM", "BM"]:
+            key = extra[0]
+
+            # Math / Vector Math / Boolean Math
+            if key in ["M", "VM", "BM"]:
                 node_active.operation = extra[1]
 
-            if extra[0] == "C":
+            # Mix Color
+            if key == "C":
                 node_active.data_type = "RGBA"
                 node_active.blend_type = extra[1]
 
-            if extra[0] in ["NA", "RV"]:
+            # Named Attribute / Random Value
+            if key in ["NA", "RV"]:
                 node_active.data_type = extra[1]
 
-            if extra[0] in ["SW"]:
+            # Switch
+            if key in ["SW"]:
                 node_active.input_type = extra[1]
 
-            if extra[0] in ["CAP", "INTER"]:
+            # Capture Attribute / Interpolate Domain
+            if key in ["CAP", "INTER"]:
                 node_active.data_type = extra[1]
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
-            if extra[0] in ["SEP", "COM"]:
+            # Separate/Combine Color
+            if key in ["SEP", "COM"]:
                 node_active.mode = extra[1]
 
-            if extra[0] == "RAY":
+            # Raycast
+            if key == "RAY":
                 node_active.data_type = extra[1]
                 node_active.mapping = extra[2]
 
-            if extra[0] == "DS":
+            # Domain Size
+            if key == "DS":
                 node_active.component = extra[1]
 
             if not prefs.quick_place:
