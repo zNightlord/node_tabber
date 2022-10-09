@@ -181,6 +181,9 @@ named_attr = [
 ]
 
 raycast = gen_gn_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
+attr_stat = gen_gn_subnode_entries(
+    "AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN
+)
 store_named_attr = gen_gn_subnode_entries("STO", "STORE", DATA_TYPE, DOMAIN)
 capture_attr = gen_gn_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
 interpolate_dom = gen_gn_subnode_entries("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)

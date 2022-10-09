@@ -163,6 +163,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             "Interpolate Domain": -1,
             "Domain Size": -1,
             "Store Named Attribute": -1,
+            "Attribute Statistic": -1,
         }
 
         for index, item in enumerate(node_items):
@@ -220,6 +221,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     item_index["Store Named Attribute"],
                     "store named attribute",
                     nt_extras.store_named_attr,
+                ),
+                (
+                    item_index["Attribute Statistic"],
+                    "attribute statistic",
+                    nt_extras.attr_stat,
                 ),
             ]:
                 enum_items, index_offset = sub_search(
@@ -326,6 +332,12 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if key in ["NA", "RV"]:
                 node_active.data_type = extra[1]
 
+            # Attribute Statistic
+            if key == "AST":
+                node_active.data_type = extra[1]
+                node_active.domain = extra[2]
+
+            # Store Named Attribute
             if key == "STO":
                 node_active.data_type = extra[1].replace("FLOAT_", "BYTE_")
                 node_active.domain = extra[2]
