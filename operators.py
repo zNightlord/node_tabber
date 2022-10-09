@@ -168,6 +168,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             "Sample Nearest": -1,
             "Sample Nearest Surface": -1,
             "Sample UV Surface": -1,
+            "Set Spline Type": -1,
         }
 
         for index, item in enumerate(node_items):
@@ -251,6 +252,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     item_index["Sample UV Surface"],
                     "sample uv surface",
                     nt_extras.sample_uv_surf,
+                ),
+                (
+                    item_index["Set Spline Type"],
+                    "set spline type",
+                    nt_extras.set_spline_type,
                 ),
             ]:
                 enum_items, index_offset = sub_search(
@@ -391,6 +397,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             # Separate/Combine Color
             if key in ["SEP", "COM"]:
                 node_active.mode = extra[1]
+
+            if key == "SPT":
+                node_active.spline_type = extra[1]
 
             # Raycast
             if key == "RAY":
