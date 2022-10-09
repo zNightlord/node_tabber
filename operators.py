@@ -162,6 +162,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             "Raycast": -1,
             "Interpolate Domain": -1,
             "Domain Size": -1,
+            "Store Named Attribute": -1,
         }
 
         for index, item in enumerate(node_items):
@@ -215,6 +216,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     nt_extras.interpolate_dom,
                 ),
                 (item_index["Domain Size"], "domain size", nt_extras.dom_size),
+                (
+                    item_index["Store Named Attribute"],
+                    "store named attribute",
+                    nt_extras.store_named_attr,
+                ),
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -319,6 +325,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             # Named Attribute / Random Value
             if key in ["NA", "RV"]:
                 node_active.data_type = extra[1]
+
+            if key == "STO":
+                node_active.data_type = extra[1].replace("FLOAT_", "BYTE_")
+                node_active.domain = extra[2]
 
             # Switch
             if key in ["SW"]:
