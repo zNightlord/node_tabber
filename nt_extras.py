@@ -4,19 +4,23 @@ import itertools
 DATA_TYPE = ["FLOAT", "INT", "FLOAT_VECTOR", "FLOAT_COLOR", "BOOLEAN"]
 DOMAIN = ["POINT", "EDGE", "FACE", "CORNER", "SPLINE", "INSTANCE"]
 MAPPING = ["INTERPOLATED", "NEAREST"]
+COMPONENT = ["MESH", "POINTCLOUD", "CURVE", "INSTANCES"]
 
 
-def gen_attr_subnode_entries(a, b, setting1, setting2):
+def gen_gn_subnode_entries(a, b, setting1, setting2):
     return [
-        [" {} {} {}".format(a, d[0], d[1]),
-         "{} {} ({}{}) {}".format(
-            str.capitalize(d[0].replace(
-                "FLOAT_", "").replace("INT", "integer")),
-            str.capitalize(d[1]),
-            d[0][0],
-            d[1][0],
-            b)]
-        for d in itertools.product(setting1, setting2)]
+        [
+            " {} {} {}".format(a, d[0], d[1]),
+            "{} {} ({}{}) {}".format(
+                str.capitalize(d[0].replace("FLOAT_", "").replace("INT", "integer")),
+                str.capitalize(d[1]),
+                d[0][0],
+                d[1][0],
+                b,
+            ),
+        ]
+        for d in itertools.product(setting1, setting2)
+    ]
 
 
 math = [
@@ -62,7 +66,7 @@ math = [
     [" M DEGREES", "To Degrees (TD) MATH"],
 ]
 
-vector_math = [
+vec_math = [
     [" VM ADD", "Add (A) VEC MATH"],
     [" VM SUBTRACT", "Subtract (S) VEC MATH"],
     [" VM MULTIPLY", "Multiply (M) VEC MATH"],
@@ -113,7 +117,7 @@ color = [
     [" C MIX", "Mix (M) COLOR"],
 ]
 
-boolean_math = [
+bool_math = [
     [" BM AND", "And (A) BOOL MATH"],
     [" BM OR", "Or (O) BOOL MATH"],
     [" BM NOT", "Not (N) BOOL MATH"],
@@ -125,7 +129,7 @@ boolean_math = [
     [" BM NIMPLY", "Subtract (S) BOOL MATH"],
 ]
 
-random_value = [
+rand_val = [
     [" RV FLOAT", "Float (F) RAND VAL"],
     [" RV INT", "Integer (I) RAND VAL"],
     [" RV FLOAT_VECTOR", "Vector (V) RAND VAL"],
@@ -150,20 +154,25 @@ switch = [
 sep_col = [
     [" SEP RGB", "RGB (SR) SEP RGB"],
     [" SEP HSV", "HSV (SH) SEP HSV"],
-    [" SEP HSL", "HSL (SL) SEP HSL"]
+    [" SEP HSL", "HSL (SL) SEP HSL"],
 ]
 
 com_col = [
     [" COM RGB", "RGB (CR) COM RGB"],
     [" COM HSV", "HSV (CH) COM HSV"],
-    [" COM HSL", "HSL (CL) COM HSL"]
+    [" COM HSL", "HSL (CL) COM HSL"],
+]
+raycast = gen_gn_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
+
+named_attr = [
+    [
+        " NA {}".format(d),
+        "{} ({}) NAMED ATTR".format(
+            str.capitalize(d.replace("FLOAT_", "").replace("INT", "Integer")), d[0]
+        ),
+    ]
+    for d in DATA_TYPE
 ]
 
-raycast = gen_attr_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
-
-named_attr = [[" NA {}".format(d), "{} ({}) NAMED ATTR".format(str.capitalize(
-    d.replace("FLOAT_", "").replace("INT", "Integer")), d[0])] for d in DATA_TYPE]
-
-capture_attr = gen_attr_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
-interpolate_dom = gen_attr_subnode_entries(
-    "INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
+capture_attr = gen_gn_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
+interpolate_dom = gen_gn_subnode_entries("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)

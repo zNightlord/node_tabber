@@ -195,10 +195,11 @@ def geonodes_node_items(context):
         NodeItem("NodeReroute"),
     ]
     for tree in bpy.data.node_groups:
-        if tree.type == 'GEOMETRY' and tree.name != context.space_data.edit_tree.name:
+        if tree.type == "GEOMETRY" and tree.name != context.space_data.edit_tree.name:
             gn_nodeitem = NodeItem(
                 "GeometryNodeGroup",
                 label=tree.name,
-                settings={'node_tree': 'bpy.data.node_groups[\'{}\']'.format(tree.name)})
+                settings={"node_tree": "bpy.data.node_groups['{}']".format(tree.name)},
+            )
             item_list.append(gn_nodeitem)
     return item_list

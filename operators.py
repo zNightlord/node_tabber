@@ -149,18 +149,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
         index_offset = 0
 
-        math_index = -1
-        vector_math_index = -1
-        mix_rgb_index = -1
-        boolean_math_index = -1
-        random_value_index = -1
-        switch_index = -1
-        capture_attr_index = -1
-        sep_col_index = -1
-        com_col_index = -1
-        interpolate_dom_index = -1
-        named_attr_index = -1
-        raycast_index = -1
+        item_ind = {}
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -183,48 +172,35 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 )
                 index_offset = index
 
-                if item.label == "Math":
-                    math_index = index
-                if item.label == "Vector Math":
-                    vector_math_index = index
-                if item.label == "Mix":
-                    mix_rgb_index = index
-                if item.label == "Boolean Math":
-                    boolean_math_index = index
-                if item.label == "Random Value":
-                    random_value_index = index
-                if item.label == "Switch":
-                    switch_index = index
-                if item.label == "Capture Attribute":
-                    capture_attr_index = index
-                if item.label == "Separate Color":
-                    sep_col_index = index
-                if item.label == "Combine Color":
-                    com_col_index = index
-                if item.label == "Interpolate Domain":
-                    interpolate_dom_index = index
-                if item.label == "Named Attribute":
-                    named_attr_index = index
-                if item.label == "Raycast":
-                    raycast_index = index
+                item_index[item.label] = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
             for s in [
-                (math_index, "math", nt_extras.math),
-                (vector_math_index, "vector math", nt_extras.vector_math),
-                (mix_rgb_index, "mix", nt_extras.color),
-                (boolean_math_index, "boolean math", nt_extras.boolean_math),
-                (random_value_index, "random value", nt_extras.random_value),
-                (switch_index, "switch", nt_extras.switch),
-                (capture_attr_index, "capture attribute",
-                 nt_extras.capture_attr),
-                (sep_col_index, "separate color", nt_extras.sep_col),
-                (com_col_index, "combine color", nt_extras.com_col),
-                (interpolate_dom_index, "interpolate domain",
-                 nt_extras.interpolate_dom),
-                (named_attr_index, "named attribute", nt_extras.named_attr),
-                (raycast_index, "raycast", nt_extras.raycast)
+                (item_index["Math"], "math", nt_extras.math),
+                (item_index["Vector Math"], "vector math", nt_extras.vec_math),
+                (item_index["Mix"], "mix", nt_extras.color),
+                (item_index["Boolean Math"], "boolean math", nt_extras.bool_math),
+                (item_index["Random Value"], "random value", nt_extras.rand_val),
+                (item_index["Switch"], "switch", nt_extras.switch),
+                (
+                    item_index["Capture Attribute"],
+                    "capture attribute",
+                    nt_extras.capture_attr,
+                ),
+                (item_index["Separate Color"], "separate color", nt_extras.sep_col),
+                (item_index["Combine Color"], "combine color", nt_extras.com_col),
+                (
+                    item_index["Named Attribute"],
+                    "named attribute",
+                    nt_extras.named_attr,
+                ),
+                (item_index["Raycast"], "raycast", nt_extras.raycast),
+                (
+                    item_index["Interpolate Domain"],
+                    "interpolate domain",
+                    nt_extras.interpolate_dom,
+                ),
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -319,7 +295,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.operation = extra[1]
 
             if extra[0] == "C":
-                node_active.data_type = 'RGBA'
+                node_active.data_type = "RGBA"
                 node_active.blend_type = extra[1]
 
             if extra[0] in ["NA", "SW", "RV"]:
@@ -337,8 +313,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.mapping = extra[2]
 
             if not prefs.quick_place:
-                bpy.ops.node.translate_attach_remove_on_cancel(
-                    "INVOKE_DEFAULT")
+                bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")
 
             nt_debug("Time taken: " + str(time.perf_counter() - startTime))
             return {"FINISHED"}
@@ -389,8 +364,7 @@ class NODE_OT_reset_tally(bpy.types.Operator):
     bl_label = "Reset node tally count"
 
     def execute(self, context):
-        categories = ["shader.json", "compositor.json",
-                      "texture.json", "geometry.json"]
+        categories = ["shader.json", "compositor.json", "texture.json", "geometry.json"]
         reset = False
         for cat in categories:
             path = os.path.dirname(__file__) + "/" + cat
