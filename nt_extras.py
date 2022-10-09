@@ -16,7 +16,7 @@ def gen_gn_subnode_entries(a, b, setting1, setting2):
             "{} {} ({}{}) {}".format(
                 str.capitalize(d[0].replace("FLOAT_", "").replace("INT", "integer")),
                 str.capitalize(d[1]),
-                d[0][0],
+                d[0].replace("FLOAT_", "")[0],
                 d[1][0],
                 b,
             ),
