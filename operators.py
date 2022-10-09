@@ -165,6 +165,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             "Store Named Attribute": -1,
             "Attribute Statistic": -1,
             "Geometry Proximity": -1,
+            "Sample Nearest": -1,
         }
 
         for index, item in enumerate(node_items):
@@ -234,6 +235,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     nt_extras.geo_prox,
                 ),
                 (item_index["Sample Index"], "sample index", nt_extras.sample_index),
+                (
+                    item_index["Sample Nearest"],
+                    "sample nearest",
+                    nt_extras.sample_nearest,
+                ),
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -356,6 +362,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             # Geometry Proximity
             if key == "GPX":
                 node_active.target_element = extra[1]
+
+            # Sample Nearest
+            if key == "SN":
+                node_active.domain = extra[1]
 
             # Capture Attribute / Interpolate Domain
             if key in ["CAP", "INTER"]:

@@ -182,14 +182,21 @@ named_attr = [
 ]
 
 raycast = gen_gn_subnode_entries("RAY", "RAYCAST", DATA_TYPE, MAPPING)
-attr_stat = gen_gn_subnode_entries(
-    "AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN
-)
 store_named_attr = gen_gn_subnode_entries("STO", "STORE", DATA_TYPE, DOMAIN)
 capture_attr = gen_gn_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
 interpolate_dom = gen_gn_subnode_entries("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
 sample_index = gen_gn_subnode_entries("SIN", "SAMPLE INDEX", DATA_TYPE, DOMAIN)
+
 geo_prox = [
     [" GPX {}".format(d), "{} ({}) GEO PROX".format(str.capitalize(d), d[0])]
     for d in TARGET_EL
 ]
+
+sample_nearest = [
+    [" SN {}".format(d), "{} ({}) SAMPLE NEAREST".format(str.capitalize(d), d[0])]
+    for d in DOMAIN[:4]
+]
+
+attr_stat = gen_gn_subnode_entries(
+    "AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN
+)
