@@ -9,12 +9,16 @@ SPLINE_TYPE = ["CATMULL_ROM", "POLY", "BEZIER", "NURBS"]
 TARGET_EL = ["POINTS", "EDGES", "FACES"]
 
 
+def replace_dtype_labels(string):
+    return string.replace("FLOAT_", "").replace("INT", "integer")
+
+
 def gen_gn_subnode_entries(a, b, setting1, setting2):
     return [
         [
             " {} {} {}".format(a, d[0], d[1]),
             "{} {} ({}{}) {}".format(
-                str.capitalize(d[0].replace("FLOAT_", "").replace("INT", "integer")),
+                str.capitalize(replace_dtype_labels(d[0])),
                 str.capitalize(d[1]),
                 d[0].replace("FLOAT_", "")[0],
                 d[1][0],
@@ -22,6 +26,20 @@ def gen_gn_subnode_entries(a, b, setting1, setting2):
             ),
         ]
         for d in itertools.product(setting1, setting2)
+    ]
+
+
+def gen_gn_data_type_subnode_entries(a, b, setting1):
+    return [
+        [
+            " {} {}".format(a, d),
+            "{} ({}) {}".format(
+                str.capitalize(replace_dtype_labels(d)),
+                d[0],
+                b,
+            ),
+        ]
+        for d in DATA_TYPE
     ]
 
 
@@ -171,16 +189,6 @@ dom_size = [
     for d in COMPONENT
 ]
 
-named_attr = [
-    [
-        " NA {}".format(d),
-        "{} ({}) NAMED ATTR".format(
-            str.capitalize(d.replace("FLOAT_", "").replace("INT", "integer")), d[0]
-        ),
-    ]
-    for d in DATA_TYPE
-]
-
 
 geo_prox = [
     [" GPX {}".format(d), "{} ({}) GEO PROX".format(str.capitalize(d), d[0])]
@@ -195,25 +203,12 @@ sample_nearest = [
     for d in DOMAIN[:4]
 ]
 
-sample_nearest_surf = [
-    [
-        " SNS {}".format(d),
-        "{} ({}) SAMPLE NEAREST SURF".format(
-            str.capitalize(d.replace("INT", "integer")), d[0]
-        ),
-    ]
-    for d in DATA_TYPE
-]
+named_attr = gen_gn_data_type_subnode_entries("NA", "NAMED ATTR", DATA_TYPE)
 
-sample_uv_surf = [
-    [
-        " SUS {}".format(d),
-        "{} ({}) SAMPLE UV SURF".format(
-            str.capitalize(d.replace("FLOAT_", "").replace("INT", "integer")), d[0]
-        ),
-    ]
-    for d in DATA_TYPE
-]
+sample_nearest_surf = gen_gn_data_type_subnode_entries(
+    "SNS", "SAMPLE NEAREST SURF", DATA_TYPE
+)
+sample_uv_surf = gen_gn_data_type_subnode_entries("SUS", "SAMPLE UV SURF", DATA_TYPE)
 
 attr_stat = gen_gn_subnode_entries(
     "AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN
