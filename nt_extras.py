@@ -6,6 +6,7 @@ DOMAIN = ["POINT", "EDGE", "FACE", "CORNER", "SPLINE", "INSTANCE"]
 MAPPING = ["INTERPOLATED", "NEAREST"]
 COMPONENT = ["MESH", "POINTCLOUD", "CURVE", "INSTANCES"]
 SPLINE_TYPE = ["CATMULL_ROM", "POLY", "BEZIER", "NURBS"]
+TARGET_EL = ["POINTS", "EDGES", "FACES"]
 
 
 def gen_gn_subnode_entries(a, b, setting1, setting2):
@@ -187,3 +188,7 @@ attr_stat = gen_gn_subnode_entries(
 store_named_attr = gen_gn_subnode_entries("STO", "STORE", DATA_TYPE, DOMAIN)
 capture_attr = gen_gn_subnode_entries("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
 interpolate_dom = gen_gn_subnode_entries("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
+geo_prox = [
+    [" GPX {}".format(d), "{} ({}) GEO PROX".format(str.capitalize(d), d[0])]
+    for d in TARGET_EL
+]

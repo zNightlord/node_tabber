@@ -164,6 +164,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             "Domain Size": -1,
             "Store Named Attribute": -1,
             "Attribute Statistic": -1,
+            "Geometry Proximity": -1,
         }
 
         for index, item in enumerate(node_items):
@@ -226,6 +227,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     item_index["Attribute Statistic"],
                     "attribute statistic",
                     nt_extras.attr_stat,
+                ),
+                (
+                    item_index["Geometry Proximity"],
+                    "geometry proximity",
+                    nt_extras.geo_prox,
                 ),
             ]:
                 enum_items, index_offset = sub_search(
@@ -345,6 +351,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             # Switch
             if key in ["SW"]:
                 node_active.input_type = extra[1]
+
+            if key == "GPX":
+                node_active.target_element = extra[1]
 
             # Capture Attribute / Interpolate Domain
             if key in ["CAP", "INTER"]:
