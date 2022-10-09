@@ -149,7 +149,20 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
         index_offset = 0
 
-        item_index = {}
+        item_index = {
+            "Math": -1,
+            "Vector Math": -1,
+            "Random Value": -1,
+            "Boolean Math": -1,
+            "Switch": -1,
+            "Capture Attribute": -1,
+            "Separate Color": -1,
+            "Combine Color": -1,
+            "Named Attribute": -1,
+            "Raycast": -1,
+            "Interpolate Domain": -1,
+            "Domain Size": -1,
+        }
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
