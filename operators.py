@@ -149,6 +149,21 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
         index_offset = 0
 
+        item_index = {
+            "Math": -1,
+            "Vector Math": -1,
+            "Random Value": -1,
+            "Boolean Math": -1,
+            "Switch": -1,
+            "Capture Attribute": -1,
+            "Separate Color": -1,
+            "Combine Color": -1,
+            "Named Attribute": -1,
+            "Raycast": -1,
+            "Interpolate Domain": -1,
+            "Domain Size": -1,
+        }
+
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
                 short = ""
@@ -170,34 +185,39 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 )
                 index_offset = index
 
+                item_index[item.label] = index
+
         # Add sub node searching if enabled
         if prefs.sub_search:
             for s in [
-                ("math", nt_extras.math),
-                ("vector math", nt_extras.vec_math),
-                ("mix", nt_extras.color),
-                ("boolean math", nt_extras.bool_math),
-                ("random value", nt_extras.rand_val),
-                ("switch", nt_extras.switch),
+                (item_index["Math"], "math", nt_extras.math),
+                (item_index["Vector Math"], "vector math", nt_extras.vec_math),
+                (item_index["Mix"], "mix", nt_extras.color),
+                (item_index["Boolean Math"], "boolean math", nt_extras.bool_math),
+                (item_index["Random Value"], "random value", nt_extras.rand_val),
+                (item_index["Switch"], "switch", nt_extras.switch),
                 (
+                    item_index["Capture Attribute"],
                     "capture attribute",
                     nt_extras.capture_attr,
                 ),
-                ("separate color", nt_extras.sep_col),
-                ("combine color", nt_extras.com_col),
+                (item_index["Separate Color"], "separate color", nt_extras.sep_col),
+                (item_index["Combine Color"], "combine color", nt_extras.com_col),
                 (
+                    item_index["Named Attribute"],
                     "named attribute",
                     nt_extras.named_attr,
                 ),
-                ("raycast", nt_extras.raycast),
+                (item_index["Raycast"], "raycast", nt_extras.raycast),
                 (
+                    item_index["Interpolate Domain"],
                     "interpolate domain",
                     nt_extras.interpolate_dom,
                 ),
-                ("domain size", nt_extras.dom_size),
+                (item_index["Domain Size"], "domain size", nt_extras.dom_size),
             ]:
                 enum_items, index_offset = sub_search(
-                    enum_items, -1, s[0], s[1], index_offset, content
+                    enum_items, s[0], s[1], s[2], index_offset, content
                 )
 
         if prefs.tally:
