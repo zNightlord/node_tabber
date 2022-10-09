@@ -233,6 +233,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                     "geometry proximity",
                     nt_extras.geo_prox,
                 ),
+                (item_index["Sample Index"], "sample index", nt_extras.sample_index),
             ]:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
@@ -338,8 +339,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if key in ["NA", "RV"]:
                 node_active.data_type = extra[1]
 
-            # Attribute Statistic
-            if key == "AST":
+            # Attribute Statistic / Sample Index
+            if key in ["AST", "SIN"]:
                 node_active.data_type = extra[1]
                 node_active.domain = extra[2]
 
@@ -352,6 +353,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if key in ["SW"]:
                 node_active.input_type = extra[1]
 
+            # Geometry Proximity
             if key == "GPX":
                 node_active.target_element = extra[1]
 
