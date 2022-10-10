@@ -305,8 +305,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if key == "GPX":
                 node_active.target_element = extra[1]
 
-            # Sample Nearest
-            if key == "SN":
+            # Sample Nearest / Duplicate Elements
+            if key in ["SN", "DE"]:
                 node_active.domain = extra[1]
 
             # Separate Geometry
@@ -318,7 +318,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.data_type = extra[1]
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
-            # Separate/Combine Color
+            # Separate / Combine Color
             if key in ["SEP", "COM"]:
                 node_active.mode = extra[1]
 
