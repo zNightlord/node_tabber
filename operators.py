@@ -5,6 +5,7 @@ import time
 
 import nodeitems_utils
 import pprint
+
 from .gn_items import geonodes_node_items
 from . import nt_extras
 
@@ -296,6 +297,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if key == "STO":
                 node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR")
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
+
+            # Scale Elements
+            if key == "SE":
+                node_active.domain = extra[1]
+                node_active.scale_mode = extra[2]
 
             # Switch
             if key == "SW":
