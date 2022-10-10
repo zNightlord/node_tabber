@@ -194,11 +194,11 @@ com_col = [
 ]
 
 vec_rot = [
-    [" VR AXIS_ANGLE", "AXIS (VRA) VEC ROT AXIS"],
-    [" VR X_AXIS", "X (VRX) VEC ROT X"],
-    [" VR Y_AXIS", "Y (VRY) VEC ROT Y"],
-    [" VR Z_AXIS", "Z (VRZ) VEC ROT Z"],
-    [" VR EULER_XYZ", "EULER (VRE) VEC ROT EULER"],
+    [" VR AXIS_ANGLE", "AXIS (VRA) VEC ROTATE AXIS"],
+    [" VR X_AXIS", "X (VRX) VEC ROTATE X"],
+    [" VR Y_AXIS", "Y (VRY) VEC ROTATE Y"],
+    [" VR Z_AXIS", "Z (VRZ) VEC ROTATE Z"],
+    [" VR EULER_XYZ", "EULER (VRE) VEC ROTATE EULER"],
 ]
 
 dom_size = gen_non_dtype_subnodes("DS", "DOMAIN SIZE", COMPONENT)
