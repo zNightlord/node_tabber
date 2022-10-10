@@ -181,8 +181,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             si = [item_index[i] for i in item_index]
             sn = [str.lower(k) for k in item_index]
             se = [nt_extras.SUBNODE_ENTRIES[e] for e in nt_extras.SUBNODE_ENTRIES]
-            searches = zip(si, sn, se)
-            for s in searches:
+            for s in zip(si, sn, se):
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
                 )
@@ -309,6 +308,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             # Sample Nearest
             if key == "SN":
                 node_active.domain = extra[1]
+
+            # Separate Geometry
+            if key == "SG":
+                node_active.domain = extra[1].replace("SPLINE", "CURVE")
 
             # Capture Attribute / Interpolate Domain
             if key in ["CAP", "INTER"]:

@@ -192,13 +192,13 @@ com_col = [
     [" COM HSL", "HSL (CL) COM HSL"],
 ]
 
-
 dom_size = gen_non_dtype_subnodes("DS", "DOMAIN SIZE", COMPONENT)
 geo_prox = gen_non_dtype_subnodes("GPX", "GEO PROX", TARGET_EL)
 sample_nearest = gen_non_dtype_subnodes("SN", "SAMPLE NEAREST", DOMAIN[:4])
 set_spline_type = gen_non_dtype_subnodes("SPT", "SET SPLINE TYPE", SPLINE_TYPE)
 merge_by_dist = gen_non_dtype_subnodes("MbD", "MERGE BY DIST", ["ALL", "CONNECTED"])
 mesh_boolean = gen_non_dtype_subnodes("MB", "MESH BOOLEAN", OPERATION)
+sep_geo = gen_non_dtype_subnodes("SG", "SEP GEO", DOMAIN[:3] + DOMAIN[-2:])
 
 named_attr = gen_dtype_subnodes("NA", "NAMED ATTR")
 sample_uv_surf = gen_dtype_subnodes("SUS", "SAMPLE UV SURF")
@@ -236,4 +236,5 @@ SUBNODE_ENTRIES = {
     "Set Spline Type": set_spline_type,
     "Mesh Boolean": mesh_boolean,
     "Merge by Distance": merge_by_dist,
+    "Separate Geometry": sep_geo,
 }
