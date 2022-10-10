@@ -313,8 +313,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if key == "SG":
                 node_active.domain = extra[1].replace("SPLINE", "CURVE")
 
-            # Capture Attribute / Interpolate Domain
-            if key in ["CAP", "INTER"]:
+            # Capture Attribute / Interpolate Domain / Field at Index
+            if key in ["CAP", "INTER", "FaI"]:
                 node_active.data_type = extra[1]
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 

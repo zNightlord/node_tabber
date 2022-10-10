@@ -212,6 +212,7 @@ capture_attr = gen_subnodes("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
 interpolate_dom = gen_subnodes("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
 sample_index = gen_subnodes("SIN", "SAMPLE INDEX", DATA_TYPE, DOMAIN)
 map_range = gen_subnodes("MR", "MAP RANGE", ["FLOAT", "FLOAT_VECTOR"], INTERPOLATION)
+field_at_index = gen_subnodes("FaI", "FIELD AT INDEX", DATA_TYPE, DOMAIN)
 
 SUBNODE_ENTRIES = {
     "Math": math,
@@ -239,4 +240,5 @@ SUBNODE_ENTRIES = {
     "Merge by Distance": merge_by_dist,
     "Separate Geometry": sep_geo,
     "Duplicate Elements": dupe_el,
+    "Field at Index": field_at_index,
 }
