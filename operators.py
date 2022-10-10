@@ -341,6 +341,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             if key == "DS":
                 node_active.component = extra[1]
 
+            # Vector Rotate
+            if key == "VR":
+                node_active.rotation_type = extra[1]
+
             # Merge by Distance
             if key == "MbD":
                 node_active.mode = extra[1]

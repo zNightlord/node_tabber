@@ -193,6 +193,14 @@ com_col = [
     [" COM HSL", "HSL (CL) COM HSL"],
 ]
 
+vec_rot = [
+    [" VR AXIS_ANGLE", "AXIS (VRA) VEC ROT AXIS"],
+    [" VR X_AXIS", "X (VRX) VEC ROT X"],
+    [" VR Y_AXIS", "Y (VRY) VEC ROT Y"],
+    [" VR Z_AXIS", "Z (VRZ) VEC ROT Z"],
+    [" VR EULER_XYZ", "EULER (VRE) VEC ROT EULER"],
+]
+
 dom_size = gen_non_dtype_subnodes("DS", "DOMAIN SIZE", COMPONENT)
 geo_prox = gen_non_dtype_subnodes("GPX", "GEO PROX", TARGET_EL)
 sample_nearest = gen_non_dtype_subnodes("SN", "SAMPLE NEAREST", DOMAIN[:4])
@@ -245,4 +253,5 @@ SUBNODE_ENTRIES = {
     "Field at Index": field_at_index,
     "Scale Elements": scale_el,
     "Named Attribute": named_attr,
+    "Vector Rotate": vec_rot,
 }
