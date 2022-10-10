@@ -149,31 +149,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
         index_offset = 0
 
-        item_index = {
-            "Math": -1,
-            "Vector Math": -1,
-            "Random Value": -1,
-            "Boolean Math": -1,
-            "Switch": -1,
-            "Capture Attribute": -1,
-            "Separate Color": -1,
-            "Combine Color": -1,
-            "Named Attribute": -1,
-            "Raycast": -1,
-            "Interpolate Domain": -1,
-            "Domain Size": -1,
-            "Store Named Attribute": -1,
-            "Attribute Statistic": -1,
-            "Geometry Proximity": -1,
-            "Sample Index": -1,
-            "Sample Nearest": -1,
-            "Sample Nearest Surface": -1,
-            "Sample UV Surface": -1,
-            "Set Spline Type": -1,
-            "Merge by Distance": -1,
-            "Map Range": -1,
-            "Mesh Boolean": -1,
-        }
+        item_index = {}
+        for key in nt_extras.SUBNODE_ENTRIES:
+            item_index[key] = -1
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -200,76 +178,11 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
         # Add sub node searching if enabled
         if prefs.sub_search:
-            for s in [
-                (item_index["Math"], "math", nt_extras.math),
-                (item_index["Vector Math"], "vector math", nt_extras.vec_math),
-                (item_index["Mix"], "mix", nt_extras.color),
-                (item_index["Boolean Math"], "boolean math", nt_extras.bool_math),
-                (item_index["Random Value"], "random value", nt_extras.rand_val),
-                (item_index["Switch"], "switch", nt_extras.switch),
-                (
-                    item_index["Capture Attribute"],
-                    "capture attribute",
-                    nt_extras.capture_attr,
-                ),
-                (item_index["Separate Color"], "separate color", nt_extras.sep_col),
-                (item_index["Combine Color"], "combine color", nt_extras.com_col),
-                (
-                    item_index["Named Attribute"],
-                    "named attribute",
-                    nt_extras.named_attr,
-                ),
-                (item_index["Raycast"], "raycast", nt_extras.raycast),
-                (
-                    item_index["Interpolate Domain"],
-                    "interpolate domain",
-                    nt_extras.interpolate_dom,
-                ),
-                (item_index["Domain Size"], "domain size", nt_extras.dom_size),
-                (
-                    item_index["Store Named Attribute"],
-                    "store named attribute",
-                    nt_extras.store_named_attr,
-                ),
-                (
-                    item_index["Attribute Statistic"],
-                    "attribute statistic",
-                    nt_extras.attr_stat,
-                ),
-                (
-                    item_index["Geometry Proximity"],
-                    "geometry proximity",
-                    nt_extras.geo_prox,
-                ),
-                (item_index["Sample Index"], "sample index", nt_extras.sample_index),
-                (
-                    item_index["Sample Nearest"],
-                    "sample nearest",
-                    nt_extras.sample_nearest,
-                ),
-                (
-                    item_index["Sample Nearest Surface"],
-                    "sample nearest surface",
-                    nt_extras.sample_nearest_surf,
-                ),
-                (
-                    item_index["Sample UV Surface"],
-                    "sample uv surface",
-                    nt_extras.sample_uv_surf,
-                ),
-                (
-                    item_index["Set Spline Type"],
-                    "set spline type",
-                    nt_extras.set_spline_type,
-                ),
-                (
-                    item_index["Merge by Distance"],
-                    "merge by distance",
-                    nt_extras.merge_by_dist,
-                ),
-                (item_index["Map Range"], "map range", nt_extras.map_range),
-                (item_index["Mesh Boolean"], "mesh boolean", nt_extras.mesh_boolean),
-            ]:
+            si = [item_index[i] for i in item_index]
+            sn = [str.lower(k) for k in item_index]
+            se = [nt_extras.SUBNODE_ENTRIES[e] for e in nt_extras.SUBNODE_ENTRIES]
+            searches = zip(si, sn, se)
+            for s in searches:
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
                 )

@@ -211,3 +211,29 @@ capture_attr = gen_subnodes("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
 interpolate_dom = gen_subnodes("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
 sample_index = gen_subnodes("SIN", "SAMPLE INDEX", DATA_TYPE, DOMAIN)
 map_range = gen_subnodes("MR", "MAP RANGE", ["FLOAT", "FLOAT_VECTOR"], INTERPOLATION)
+
+SUBNODE_ENTRIES = {
+    "Math": math,
+    "Vector Math": vec_math,
+    "Mix": color,
+    "Boolean Math": bool_math,
+    "Random Value": rand_val,
+    "Switch": switch,
+    "Separate Color": sep_col,
+    "Combine Color": com_col,
+    "Domain Size": dom_size,
+    "Geometry Proximity": geo_prox,
+    "Sample Nearest": sample_nearest,
+    "Sample Nearest Surface": sample_nearest_surf,
+    "Sample UV Surface": sample_uv_surf,
+    "Attribute Statistic": attr_stat,
+    "Raycast": raycast,
+    "Store Named Attribute": store_named_attr,
+    "Capture Attribute": capture_attr,
+    "Interpolate Domain": interpolate_dom,
+    "Sample Index": sample_index,
+    "Map Range": map_range,
+    "Set Spline Type": set_spline_type,
+    "Mesh Boolean": mesh_boolean,
+    "Merge by Distance": merge_by_dist,
+}
