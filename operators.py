@@ -283,6 +283,9 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 else:
                     node_active.operation = extra[2]
 
+            if key == "UU":
+                node_active.method = extra[1]
+
             # Math / Vector Math / Boolean Math
             if key in ["M", "VM", "BM"]:
                 node_active.operation = extra[1]
