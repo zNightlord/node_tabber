@@ -105,7 +105,9 @@ gn_cmp_vec = [
             str.title(d[0]).replace("_", " ").replace(" Product", ""),
             str.title(d[1]).replace("_", " "),
             d[0][0],
-            d[1][0],
+            d[1][0]
+            if "_" not in d[1]
+            else d[1].split("_")[0][0] + d[1].split("_")[1][0],
         ),
     ]
     for d in itertools.product(GN_CMP_VEC_MODES, GN_CMP_OPS[:-2])
