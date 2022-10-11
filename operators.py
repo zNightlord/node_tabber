@@ -274,11 +274,14 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
 
             key = extra[0]
 
-            # GN Compare (Vector)
-            if key == "CMP" and extra[1] == "VECTOR":
+            # GN Compare
+            if key == "CMP":
                 node_active.data_type = extra[1]
-                node_active.mode = extra[2]
-                node_active.operation = extra[3]
+                if extra[1] == "VECTOR":
+                    node_active.mode = extra[2]
+                    node_active.operation = extra[3]
+                else:
+                    node_active.operation = extra[2]
 
             # Math / Vector Math / Boolean Math
             if key in ["M", "VM", "BM"]:

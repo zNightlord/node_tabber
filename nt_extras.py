@@ -23,19 +23,6 @@ GN_CMP_OPS = [
     "DARKER",
 ]
 
-gn_cmp_vec = [
-    [
-        f" CMP VECTOR {d[0]} {d[1]}",
-        "V {} {} (CV{}{}) COMP".format(
-            str.title(d[0]).replace("_", " ").replace(" Product", ""),
-            str.title(d[1]).replace("_", " "),
-            d[0][0],
-            d[1][0],
-        ),
-    ]
-    for d in itertools.product(GN_CMP_VEC_MODES, GN_CMP_OPS[:-2])
-]
-
 
 def replace_dtype_labels(string):
     return string.replace("FLOAT_", "").replace("INT", "integer")
@@ -76,6 +63,44 @@ def gen_non_dtype_subnodes(a, b, setting1):
         [" {} {}".format(a, d), "{} ({}) {}".format(str.title(d), d[0], b)]
         for d in setting1
     ]
+
+
+gn_cmp_col = [
+    [
+        f" CMP RGBA {d[1]}",
+        "Color {} (CC{}) COMP".format(
+            str.title(d[1]).replace("_", " "),
+            d[1][0],
+        ),
+    ]
+    for d in itertools.product(["COLOR"], GN_CMP_OPS[4:])
+]
+
+gn_cmp_fl_it = [
+    [
+        f" CMP {d[0]} {d[1]}",
+        "{} {} (C{}{}) COMP".format(
+            str.title(replace_dtype_labels((d[0]))),
+            str.title(d[1]).replace("_", " "),
+            d[0][0],
+            d[1][0],
+        ),
+    ]
+    for d in itertools.product(["FLOAT", "INT"], GN_CMP_OPS[:-2])
+]
+
+gn_cmp_vec = [
+    [
+        f" CMP VECTOR {d[0]} {d[1]}",
+        "V {} {} (CV{}{}) COMP".format(
+            str.title(d[0]).replace("_", " ").replace(" Product", ""),
+            str.title(d[1]).replace("_", " "),
+            d[0][0],
+            d[1][0],
+        ),
+    ]
+    for d in itertools.product(GN_CMP_VEC_MODES, GN_CMP_OPS[:-2])
+]
 
 
 math = [
@@ -280,5 +305,5 @@ SUBNODE_ENTRIES = {
     "Scale Elements": scale_el,
     "Named Attribute": named_attr,
     "Vector Rotate": vec_rot,
-    "Compare": gn_cmp_vec,
+    "Compare": gn_cmp_vec + gn_cmp_fl_it + gn_cmp_col,
 }
