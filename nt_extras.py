@@ -11,6 +11,31 @@ INTERPOLATION = ["LINEAR", "STEPPED", "SMOOTHSTEP", "SMOOTHERSTEP"]
 OPERATION = ["INTERSECT", "UNION", "DIFFERENCE"]
 SCALE_EL_MODES = ["UNIFORM", "SINGLE_AXIS"]
 
+GN_CMP_VEC_MODES = ["ELEMENT", "LENGTH", "DOT_PRODUCT", "AVERAGE", "DIRECTION"]
+GN_CMP_OPS = [
+    "LESS_THAN",
+    "LESS_EQUAL",
+    "GREATER_THAN",
+    "GREATER_EQUAL",
+    "EQUAL",
+    "NOT_EQUAL",
+    "BRIGHTER",
+    "DARKER",
+]
+
+gn_cmp_vec = [
+    [
+        f" CMP VECTOR {d[0]} {d[1]}",
+        "V {} {} (CV{}{}) COMP".format(
+            str.title(d[0]).replace("_", " ").replace(" Product", ""),
+            str.title(d[1]).replace("_", " "),
+            d[0][0],
+            d[1][0],
+        ),
+    ]
+    for d in itertools.product(GN_CMP_VEC_MODES, GN_CMP_OPS[:-2])
+]
+
 
 def replace_dtype_labels(string):
     return string.replace("FLOAT_", "").replace("INT", "integer")
@@ -201,6 +226,7 @@ vec_rot = [
     [" VR EULER_XYZ", "Euler (VRE) VEC ROTATE EULER"],
 ]
 
+
 dom_size = gen_non_dtype_subnodes("DS", "DOMAIN SIZE", COMPONENT)
 geo_prox = gen_non_dtype_subnodes("GPX", "GEO PROX", TARGET_EL)
 sample_nearest = gen_non_dtype_subnodes("SN", "SAMPLE NEAREST", DOMAIN[:4])
@@ -254,4 +280,5 @@ SUBNODE_ENTRIES = {
     "Scale Elements": scale_el,
     "Named Attribute": named_attr,
     "Vector Rotate": vec_rot,
+    "Compare": gn_cmp_vec,
 }
