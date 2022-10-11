@@ -60,33 +60,30 @@ def gen_dtype_subnodes(a, b):
 
 def gen_non_dtype_subnodes(a, b, setting1):
     return [
-        [" {} {}".format(a, d), "{} ({}) {}".format(str.title(d), d[0], b)]
+        [
+            " {} {}".format(a, d),
+            "{} ({}) {}".format(str.title(d).replace("_", " "), d[0], b),
+        ]
         for d in setting1
     ]
 
 
-gn_cmp_str = [
-    [
-        f" CMP STRING {d[1]}",
-        "String {} (CS{}) COMP".format(
-            str.title(d[1]).replace("_", " "),
-            d[1][0],
-        ),
+def gn_cmp_str_col(a, setting1, setting2):
+    return [
+        [
+            f" CMP {a} {d[1]}",
+            "{} {} (C{}) COMP".format(
+                str.title(d[0]),
+                str.title(d[1].replace("_", " ")),
+                d[0][0] + d[1][0],
+            ),
+        ]
+        for d in itertools.product(setting1, setting2)
     ]
-    for d in itertools.product(["STRING"], GN_CMP_OPS[4:-2])
-]
 
 
-gn_cmp_col = [
-    [
-        f" CMP RGBA {d[1]}",
-        "Color {} (CC{}) COMP".format(
-            str.title(d[1]).replace("_", " "),
-            d[1][0],
-        ),
-    ]
-    for d in itertools.product(["COLOR"], GN_CMP_OPS[4:])
-]
+gn_cmp_str = gn_cmp_str_col("STRING", ["STRING"], GN_CMP_OPS[4:-2])
+gn_cmp_col = gn_cmp_str_col("RGBA", ["COLOR"], GN_CMP_OPS[4:])
 
 gn_cmp_fl_it = [
     [
