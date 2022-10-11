@@ -82,6 +82,10 @@ def gn_cmp_str_col(a, setting1, setting2):
     ]
 
 
+def op_abbr(s):
+    return s[0] if "_" not in s else s.split("_")[0][0] + s.split("_")[1][0]
+
+
 gn_cmp_str = gn_cmp_str_col("STRING", ["STRING"], GN_CMP_OPS[4:-2])
 gn_cmp_col = gn_cmp_str_col("RGBA", ["COLOR"], GN_CMP_OPS[4:])
 
@@ -92,7 +96,7 @@ gn_cmp_fl_it = [
             str.title(replace_dtype_labels((d[0]))),
             str.title(d[1]).replace("_", " "),
             d[0][0],
-            d[1][0],
+            op_abbr(d[1]),
         ),
     ]
     for d in itertools.product(["FLOAT", "INT"], GN_CMP_OPS[:-2])
@@ -105,9 +109,7 @@ gn_cmp_vec = [
             str.title(d[0]).replace("_", " ").replace(" Product", ""),
             str.title(d[1]).replace("_", " "),
             d[0][0],
-            d[1][0]
-            if "_" not in d[1]
-            else d[1].split("_")[0][0] + d[1].split("_")[1][0],
+            op_abbr(d[1]),
         ),
     ]
     for d in itertools.product(GN_CMP_VEC_MODES, GN_CMP_OPS[:-2])
