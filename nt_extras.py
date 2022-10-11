@@ -65,6 +65,18 @@ def gen_non_dtype_subnodes(a, b, setting1):
     ]
 
 
+gn_cmp_str = [
+    [
+        f" CMP STRING {d[1]}",
+        "String {} (CS{}) COMP".format(
+            str.title(d[1]).replace("_", " "),
+            d[1][0],
+        ),
+    ]
+    for d in itertools.product(["STRING"], GN_CMP_OPS[4:-2])
+]
+
+
 gn_cmp_col = [
     [
         f" CMP RGBA {d[1]}",
@@ -305,5 +317,5 @@ SUBNODE_ENTRIES = {
     "Scale Elements": scale_el,
     "Named Attribute": named_attr,
     "Vector Rotate": vec_rot,
-    "Compare": gn_cmp_vec + gn_cmp_fl_it + gn_cmp_col,
+    "Compare": gn_cmp_vec + gn_cmp_fl_it + gn_cmp_col + gn_cmp_str,
 }
