@@ -127,17 +127,18 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
         prefs = addon.preferences
 
         enum_items.clear()
-        category = context.space_data.tree_type[0]
+        category = ""
+        space = context.space_data.tree_type
 
         node_items = nodeitems_utils.node_items_iter(context)
 
-        if category == "S":
+        if space[0] == "S":
             category = "shader.json"
-        if category == "C":
+        if space[0] == "C":
             category = "compositor.json"
-        if category == "T":
+        if space[0] == "T":
             category = "texture.json"
-        if category == "G":
+        if space[0] == "G":
             node_items = geonodes_node_items(context)
             category = "geometry.json"
 
@@ -182,7 +183,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             si = [item_index[i] for i in item_index]
             sn = [str.lower(k) for k in item_index]
             se = [nt_extras.SUBNODE_ENTRIES[e] for e in nt_extras.SUBNODE_ENTRIES]
-            for s in zip(si, sn, se):
+            nt = [t for t in nt_extras.SUBNODE_ENTRIES]
+            for s in zip(si, sn, se, nt):
+                if space[0] == "C" and s[3] == "Map Range":
+                    continue
                 enum_items, index_offset = sub_search(
                     enum_items, s[0], s[1], s[2], index_offset, content
                 )
@@ -283,6 +287,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 else:
                     node_active.operation = extra[2]
 
+            # UV Unwrap
             if key == "UU":
                 node_active.method = extra[1]
 
@@ -295,8 +300,10 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.data_type = "RGBA"
                 node_active.blend_type = extra[1]
 
-            # Named Attribute / Random Value
-            # Sample Nearest Surface / Sample UV Surface
+            # Named Attribute
+            # Random Value
+            # Sample Nearest Surface
+            # Sample UV Surface
             if key in ["NA", "RV", "SNS", "SUS"]:
                 node_active.data_type = extra[1]
 
@@ -336,8 +343,8 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
                 node_active.data_type = extra[1]
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
-            # Separate / Combine Color
-            if key in ["SEP", "COM"]:
+            # Separate / Combine Color / Merge by Distance
+            if key in ["SEP", "COM", "MbD"]:
                 node_active.mode = extra[1]
 
             # Set Spline Type
@@ -356,10 +363,6 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
             # Vector Rotate
             if key == "VR":
                 node_active.rotation_type = extra[1]
-
-            # Merge by Distance
-            if key == "MbD":
-                node_active.mode = extra[1]
 
             # Map Range
             if key == "MR":

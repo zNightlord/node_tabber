@@ -23,6 +23,8 @@ GN_CMP_OPS = [
     "DARKER",
 ]
 
+FILTER_MODES = ["SOFTEN"]
+
 
 def replace_dtype_labels(string):
     return string.replace("FLOAT_", "").replace("INT", "integer")
