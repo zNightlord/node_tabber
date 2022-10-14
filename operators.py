@@ -115,10 +115,9 @@ class NODE_OT_add_tabber_search(Operator):
         space = context.space_data.tree_type
 
         category = f'{space.removesuffix("NodeTree").lower()}.json'
+        node_items = nodeitems_utils.node_items_iter(context)
         if space == "GeometryNodeTree":
             node_items = geonodes_node_items(context)
-        else:
-            node_items = nodeitems_utils.node_items_iter(context)
 
         path = os.path.dirname(__file__) + "/" + category
         if not os.path.exists(path):
