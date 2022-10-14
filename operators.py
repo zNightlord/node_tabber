@@ -1,28 +1,16 @@
 import bpy
 import json
-
+import os
+import pathlib
 import time
-
-import nodeitems_utils
-import pprint
 
 from .gn_items import geonodes_node_items
 from . import nt_extras
 
-import os
-import pathlib
+import nodeitems_utils
+from bpy.types import Operator, PropertyGroup
+from bpy.props import EnumProperty, StringProperty
 
-from bpy.types import (
-    Operator,
-    PropertyGroup,
-)
-from bpy.props import (
-    BoolProperty,
-    CollectionProperty,
-    EnumProperty,
-    IntProperty,
-    StringProperty,
-)
 
 ADD_ON_PATH = pathlib.PurePath(os.path.dirname(__file__)).name
 
@@ -108,7 +96,7 @@ class NodeTabSetting(PropertyGroup):
     )
 
 
-class NODE_OT_add_tabber_search(bpy.types.Operator):
+class NODE_OT_add_tabber_search(Operator):
     """Add a node to the active tree using node tabber"""
 
     bl_idname = "node.add_tabber_search"
@@ -427,7 +415,7 @@ class NODE_OT_add_tabber_search(bpy.types.Operator):
     )
 
 
-class NODE_OT_reset_tally(bpy.types.Operator):
+class NODE_OT_reset_tally(Operator):
     """Reset the tally count"""
 
     bl_idname = "node.reset_tally"
