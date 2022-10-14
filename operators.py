@@ -16,8 +16,7 @@ ADD_ON_PATH = pathlib.PurePath(os.path.dirname(__file__)).name
 
 
 def nt_debug(msg):
-    addon = bpy.context.preferences.addons[ADD_ON_PATH]
-    prefs = addon.preferences
+    prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
 
     if prefs.nt_debug:
         print(str(msg))
@@ -30,8 +29,7 @@ def take_fifth(elem):
 
 
 def write_score(category, enum_items):
-    addon = bpy.context.preferences.addons[ADD_ON_PATH]
-    prefs = addon.preferences
+    prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
 
     if category == "S":
         category = "shader.json"
@@ -111,8 +109,7 @@ class NODE_OT_add_tabber_search(Operator):
         nt_debug("DEF: node_enum_items")
         enum_items = NODE_OT_add_tabber_search._enum_item_hack
 
-        addon = bpy.context.preferences.addons[ADD_ON_PATH]
-        prefs = addon.preferences
+        prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
 
         enum_items.clear()
         category = ""
@@ -209,8 +206,7 @@ class NODE_OT_add_tabber_search(Operator):
     def execute(self, context):
         nt_debug("DEF: execute")
         startTime = time.perf_counter()
-        addon = bpy.context.preferences.addons[ADD_ON_PATH]
-        prefs = addon.preferences
+        prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
 
         _find_node_item = self.find_node_item(context)
         item = _find_node_item[0]
