@@ -29,8 +29,8 @@ def take_fifth(elem):
 
 
 def write_score(category, enum_items):
+    print(category)
     prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
-
     if category == "S":
         category = "shader.json"
     if category == "C":
@@ -273,7 +273,8 @@ class NODE_OT_add_tabber_search(Operator):
 
             # Mix Color
             if key == "C":
-                node_active.data_type = "RGBA"
+                if space.tree_type != "CompositorNodeTree":
+                    node_active.data_type = "RGBA"
                 node_active.blend_type = extra[1]
 
             # Named Attribute
