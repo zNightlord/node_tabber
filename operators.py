@@ -28,17 +28,10 @@ def take_fifth(elem):
     return int(elem[2])
 
 
-def write_score(category, enum_items):
-    print(category)
+def write_score(enum_items):
+    tree_type = bpy.context.space_data.tree_type
+    category = f'{tree_type.removesuffix("NodeTree").lower()}.json'
     prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
-    if category == "S":
-        category = "shader.json"
-    if category == "C":
-        category = "compositor.json"
-    if category == "T":
-        category = "texture.json"
-    if category == "G":
-        category = "geometry.json"
 
     path = os.path.dirname(__file__) + "/" + category
     if not os.path.exists(path):
@@ -154,7 +147,7 @@ class NODE_OT_add_tabber_search(Operator):
                 index_offset = index
 
                 item_index[item.label] = index
-
+                
         # Add sub node searching if enabled
         if prefs.sub_search:
             si = [item_index[i] for i in item_index]
@@ -218,10 +211,10 @@ class NODE_OT_add_tabber_search(Operator):
 
         if type == "0":
             nt_debug("Writing normal node tally")
-            write_score(item.nodetype[0], match)
+            write_score(match)
         else:
             nt_debug("Writing sub node tally")
-            write_score(item.nodetype[0], nice_name)
+            write_score(nice_name)
 
         nt_debug("Hack")
 
