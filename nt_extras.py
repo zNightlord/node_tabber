@@ -47,7 +47,6 @@ def gen_subnodes(a, b, setting1, setting2):
             f'{str.title(replace_dtype_labels(d0))} {str.title(d1).replace("_", "")} ({d0.replace("FLOAT_", "")[0]}{d1[0]}) {b}'
         ] 
         for d0, d1 in itertools.product(setting1, setting2)]
-    #print(output)
     return output
 
 
@@ -59,7 +58,6 @@ def gen_dtype_subnodes(a, b):
         ]
         for d in DATA_TYPE
     ]
-    #print(output)
     return output
 
 
@@ -71,7 +69,6 @@ def gen_non_dtype_subnodes(a, b, setting1):
         ]
         for d in setting1
     ]
-    #print(output)
     return output
 
 
