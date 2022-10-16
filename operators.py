@@ -59,7 +59,7 @@ def sub_search(
     enum_items, node_type_index, node_type, extras_ops, index_offset, content
 ):
     if node_type_index > -1:
-        nt_debug(f"Adding ${node_type} nodes")
+        nt_debug(f"Adding ${str.lower(node_type)} nodes")
         for index2, subname in enumerate(extras_ops):
             tally = 0
             if subname[1] in content:
@@ -147,15 +147,14 @@ class NODE_OT_add_tabber_search(Operator):
                 
         # Add sub node searching if enabled
         if prefs.sub_search:
-            si = [item_index[i] for i in item_index]
-            sn = [str.lower(k) for k in item_index]
-            se = [nt_extras.SUBNODE_ENTRIES[e] for e in nt_extras.SUBNODE_ENTRIES]
-            nt = [t for t in nt_extras.SUBNODE_ENTRIES]
-            for s in zip(si, sn, se, nt):
-                if space[0] == "C" and s[3] == "Map Range":
+            sn_entries = nt_extras.SUBNODE_ENTRIES
+            sn_info = zip(sn_entries.keys(), item_index.values(), item_index.keys(), sn_entries.values())
+
+            for nodetype, *sn_data in sn_info:
+                if space == "CompositorNodeTree" and nodetype == "Map Range":
                     continue
                 enum_items, index_offset = sub_search(
-                    enum_items, s[0], s[1], s[2], index_offset, content
+                    enum_items, *sn_data, index_offset, content
                 )
 
         if prefs.tally:
@@ -190,10 +189,8 @@ class NODE_OT_add_tabber_search(Operator):
         startTime = time.perf_counter()
         prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
 
-        _find_node_item = self.find_node_item(context)
-        item = _find_node_item[0]
-        extra = _find_node_item[1]
-        nice_name = _find_node_item[2]
+        #Fetch node item info
+        item, extra, nice_name = self.find_node_item(context)
 
         # Add to tally
         short = ""
