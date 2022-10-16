@@ -35,11 +35,8 @@ def write_score(enum_items):
 
     path = os.path.dirname(__file__) + "/" + category
     if not os.path.exists(path):
-        content = {}
-        content[enum_items] = {"tally": 1}
-
         with open(path, "w") as f:
-            json.dump(content, f)
+            json.dump({enum_items: {"tally": 1}}, f)
 
         print("Nodetabber created :" + path)
     else:
