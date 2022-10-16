@@ -413,12 +413,11 @@ class NODE_OT_reset_tally(Operator):
                 # delete file
                 os.remove(path)
 
-            if reset:
-                info = "Reset Tallies"
-                self.report({"INFO"}, info)
-            else:
-                info = "No tallies to reset."
-                self.report({"INFO"}, info)
+        if reset:
+            info = "Reset Tallies"
+        else:
+            info = "No tallies to reset."
+        self.report({"INFO"}, info)
 
         return {"FINISHED"}
 
