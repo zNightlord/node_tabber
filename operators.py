@@ -61,15 +61,16 @@ def sub_search(
     if node_type_index > -1:
         nt_debug(f"Adding ${str.lower(node_type)} nodes")
         for index2, subname in enumerate(extras_ops):
+            sn_name, sn_label = subname
             tally = 0
-            if subname[1] in content:
-                tally = content[subname[1]]["tally"]
+            if sn_label in content:
+                tally = content[sn_label]["tally"]
             enum_items.append(
                 (
-                    str(node_type_index) + subname[0] + " " + subname[1],
-                    subname[1],
+                    f"{node_type_index} {sn_name} {sn_label}",
+                    sn_label,
                     str(tally),
-                    index_offset + 1 + index2,
+                    index_offset + index2 + 1,
                 )
             )
         index_offset += index2 + 1

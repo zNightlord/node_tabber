@@ -43,7 +43,7 @@ def replace_dtype_labels(string):
 def gen_subnodes(a, b, setting1, setting2):
     output = [
         [
-            f' {a} {d0} {d1}',
+            f'{a} {d0} {d1}',
             f'{str.title(replace_dtype_labels(d0))} {str.title(d1).replace("_", "")} ({d0.replace("FLOAT_", "")[0]}{d1[0]}) {b}'
         ] 
         for d0, d1 in itertools.product(setting1, setting2)]
@@ -53,7 +53,7 @@ def gen_subnodes(a, b, setting1, setting2):
 def gen_dtype_subnodes(a, b):
     output = [
         [
-            f' {a} {d}',
+            f'{a} {d}',
             f'{str.title(replace_dtype_labels(d))} ({d[0]}) {b}'
         ]
         for d in DATA_TYPE
@@ -64,7 +64,7 @@ def gen_dtype_subnodes(a, b):
 def gen_non_dtype_subnodes(a, b, setting1):
     output = [
         [
-            f' {a} {d}',
+            f'{a} {d}',
             f'{str.title(d).replace("_", " ")} ({d[0]}) {b}',
         ]
         for d in setting1
@@ -75,7 +75,7 @@ def gen_non_dtype_subnodes(a, b, setting1):
 def gn_cmp_str_col(a, setting1, setting2):
     return [
         [
-            f' CMP {a} {d1}',
+            f'CMP {a} {d1}',
             f'{str.title(d0)} {str.title(d1.replace("_", " "))} (C{d0[0] + d1[0]}) COMP'
         ]
         for d0, d1 in itertools.product(setting1, setting2)
@@ -92,7 +92,7 @@ gn_cmp_col = gn_cmp_str_col("RGBA", ["COLOR"], GN_CMP_OPS[4:])
 
 gn_cmp_fl_it = [
     [
-        f' CMP {d0} {d1}',
+        f'CMP {d0} {d1}',
         f'{str.title(replace_dtype_labels((d0)))} {str.title(d1).replace("_", " ")} (C{d0[0] + op_abbr(d1)}) COMP'
     ]
     for d0, d1 in itertools.product(["FLOAT", "INT"], GN_CMP_OPS[:-2])
@@ -100,7 +100,7 @@ gn_cmp_fl_it = [
 
 gn_cmp_vec = [
     [
-        f' CMP VECTOR {d0} {d1}',
+        f'CMP VECTOR {d0} {d1}',
         f'V {str.title(d0).replace("_", " ").replace(" Product", "")} {str.title(d1).replace("_", " ")} (CV{d0[0] + op_abbr(d1)}) COMP'
     ]
     for d0, d1 in itertools.product(GN_CMP_VEC_MODES, GN_CMP_OPS[:-2])
@@ -109,7 +109,7 @@ gn_cmp_vec = [
 
 c_filter = [
     [
-        f' F {ft.replace("DIAMOND", "SHARPEN_DIAMOND").replace("BOX","SHARPEN")}',
+        f'F {ft.replace("DIAMOND", "SHARPEN_DIAMOND").replace("BOX","SHARPEN")}',
         f'{str.title(ft.replace("DIAMOND", "Diamond Sharpen").replace("BOX", "Box Sharpen"))} ({ft[0]}) FILTER'
     ]
     for ft in FILTER_MODES
