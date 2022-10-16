@@ -205,15 +205,6 @@ class NODE_OT_add_tabber_search(Operator):
             node_tree_type = None
             if "node_tree" in item.settings:
                 node_tree_type = eval(item.settings["node_tree"])
-            try:
-                for setting in item.settings.items():
-                    if setting[0] != "node_tree":
-                        ops = self.settings.add()
-                        ops.name = setting[0]
-                        ops.value = setting[1]
-            except AttributeError:
-                print("An exception occurred")
-
             self.create_node(context, item.nodetype, node_tree_type)
 
             nt_debug(str(item.nodetype))
@@ -221,9 +212,7 @@ class NODE_OT_add_tabber_search(Operator):
             nt_debug("extra 1: " + str(extra[1]))
 
             space = context.space_data
-            node_tree = space.node_tree
             node_active = context.active_node
-            node_selected = context.selected_nodes
 
             key = extra[0]
 
