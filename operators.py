@@ -125,25 +125,12 @@ class NODE_OT_add_tabber_search(Operator):
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
-                short = ""
-                tally = 0
-                words = item.label.split()
-                for word in words:
-                    short += word[0]
-                match = item.label + " (" + short + ")"
-                if match in content:
-                    tally = content[match]["tally"]
+                abbr = "".join(word[0] for word in item.label.split())
+                match = f'{item.label} ({abbr})'
+                tally = content.get(match, {"tally":0})["tally"]
 
-                enum_items.append(
-                    (
-                        str(index) + " 0 0",
-                        item.label + " (" + short + ")",
-                        str(tally),
-                        index,
-                    )
-                )
+                enum_items.append((f'{index} 0 0', match, str(tally), index,))
                 index_offset = index
-
                 item_index[item.label] = index
                 
         # Add sub node searching if enabled
