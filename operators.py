@@ -41,30 +41,28 @@ def write_score(enum_items):
         print("Nodetabber created :" + path)
     else:
         with open(path, "r") as f:
-            content = json.load(f)
+            tally_dict = json.load(f)
 
-        if enum_items in content:
-            if content[enum_items]["tally"] < prefs.tally_weight:
-                content[enum_items]["tally"] += 1
+        if enum_items in tally_dict:
+            if tally_dict[enum_items]["tally"] < prefs.tally_weight:
+                tally_dict[enum_items]["tally"] += 1
         else:
-            content[enum_items] = {"tally": 1}
+            tally_dict[enum_items] = {"tally": 1}
 
         with open(path, "w") as f:
-            json.dump(content, f)
+            json.dump(tally_dict, f)
 
     return
 
 
 def sub_search(
-    enum_items, node_type_index, node_type, extras_ops, index_offset, content
+    enum_items, node_type_index, node_type, extras_ops, index_offset, tally_dict
 ):
     if node_type_index > -1:
         nt_debug(f"Adding ${str.lower(node_type)} nodes")
         for index2, subname in enumerate(extras_ops):
             sn_name, sn_label = subname
-            tally = 0
-            if sn_label in content:
-                tally = content[sn_label]["tally"]
+            tally = tally_dict.get(sn_label, {"tally":0})["tally"]
             enum_items.append(
                 (
                     f"{node_type_index} {sn_name} {sn_label}",
@@ -112,10 +110,10 @@ class NODE_OT_add_tabber_search(Operator):
 
         path = os.path.dirname(__file__) + "/" + category
         if not os.path.exists(path):
-            content = {}
+            tally_dict = {}
         else:
             with open(path, "r") as f:
-                content = json.load(f)
+                tally_dict = json.load(f)
 
         index_offset = 0
 
@@ -127,7 +125,7 @@ class NODE_OT_add_tabber_search(Operator):
             if isinstance(item, nodeitems_utils.NodeItem):
                 abbr = "".join(word[0] for word in item.label.split())
                 match = f'{item.label} ({abbr})'
-                tally = content.get(match, {"tally":0})["tally"]
+                tally = tally_dict.get(match, {"tally":0})["tally"]
 
                 enum_items.append((f'{index} 0 0', match, str(tally), index,))
                 index_offset = index
@@ -142,7 +140,7 @@ class NODE_OT_add_tabber_search(Operator):
                 if space == "CompositorNodeTree" and nodetype == "Map Range":
                     continue
                 enum_items, index_offset = sub_search(
-                    enum_items, *sn_data, index_offset, content
+                    enum_items, *sn_data, index_offset, tally_dict
                 )
 
         if prefs.tally:
