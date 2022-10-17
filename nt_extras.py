@@ -283,11 +283,11 @@ com_col = [
 ]
 
 vec_rot = [
-    [" VR AXIS_ANGLE", "Axis (VRA) VEC ROTATE AXIS"],
-    [" VR X_AXIS", "X (VRX) VEC ROTATE X"],
-    [" VR Y_AXIS", "Y (VRY) VEC ROTATE Y"],
-    [" VR Z_AXIS", "Z (VRZ) VEC ROTATE Z"],
-    [" VR EULER_XYZ", "Euler (VRE) VEC ROTATE EULER"],
+    [" VR AXIS_ANGLE", "Axis (VRA) VECTOR ROTATE"],
+    [" VR X_AXIS", "X (VRX) VECTOR ROTATE"],
+    [" VR Y_AXIS", "Y (VRY) VECTOR ROTATE"],
+    [" VR Z_AXIS", "Z (VRZ) VECTOR ROTATE"],
+    [" VR EULER_XYZ", "Euler (VRE) VECTOR ROTATE"],
 ]
 
 uv_unwrap = [
