@@ -295,6 +295,11 @@ uv_unwrap = [
     [" UU CONFORMAL", "Conformal (C) UV UNWRAP"],
 ]
 
+fillet_curve = [
+    [" FC BEZIER", "Bezier (B) FILLET CURVE"],
+    [" FC POLY", "Poly (P) FILLET CURVE"]
+]
+
 dom_size = gen_non_dtype_subnodes("DS", "DOMAIN SIZE", COMPONENT)
 geo_prox = gen_non_dtype_subnodes("GPX", "GEO PROX", TARGET_EL)
 sample_nearest = gen_non_dtype_subnodes("SN", "SAMPLE NEAREST", DOMAIN[:4])
@@ -354,5 +359,6 @@ SUBNODE_ENTRIES = {
     "UV Unwrap": uv_unwrap,
     "Filter": c_filter,
     "Float to Integer": float_to_int,
-    "Accumulate Field": accum_field
+    "Accumulate Field": accum_field,
+    "Fillet Curve": fillet_curve
 }
