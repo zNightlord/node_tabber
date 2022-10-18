@@ -389,13 +389,12 @@ class NODE_OT_reset_tally(Operator):
         return {"FINISHED"}
 
 
+classes = (NodeTabSetting, NODE_OT_add_tabber_search, NODE_OT_reset_tally)
+
 def register():
-    bpy.utils.register_class(NodeTabSetting)
-    bpy.utils.register_class(NODE_OT_add_tabber_search)
-    bpy.utils.register_class(NODE_OT_reset_tally)
-
-
+    for cls in classes:
+        bpy.utils.register_class(cls)
+    
 def unregister():
-    bpy.utils.unregister_class(NodeTabSetting)
-    bpy.utils.unregister_class(NODE_OT_add_tabber_search)
-    bpy.utils.unregister_class(NODE_OT_reset_tally)
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
