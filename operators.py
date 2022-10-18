@@ -141,12 +141,9 @@ class NODE_OT_add_tabber_search(Operator):
                 )
 
         if prefs.tally:
-            tmp = enum_items
-            tmp = sorted(enum_items, key=take_fifth, reverse=True)
-        else:
-            tmp = enum_items
-        return tmp
-        # return enum_items
+            enum_items.sort(key=take_fifth, reverse=True)
+
+        return enum_items
 
     # Look up the item based on index
     def find_node_item(self, context):
