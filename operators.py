@@ -43,11 +43,9 @@ def write_score(enum_items):
         with open(path, "r") as f:
             tally_dict = json.load(f)
 
-        if enum_items in tally_dict:
-            if tally_dict[enum_items]["tally"] < prefs.tally_weight:
-                tally_dict[enum_items]["tally"] += 1
-        else:
-            tally_dict[enum_items] = {"tally": 1}
+        old_tally = tally_dict.get(enum_items, {"tally":0})["tally"]
+        new_tally = min(old_tally + 1, prefs.tally_weight)
+        tally_dict[enum_items] = {"tally": new_tally}
 
         with open(path, "w") as f:
             json.dump(tally_dict, f)
