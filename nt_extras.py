@@ -256,16 +256,21 @@ com_col = [
 ]
 
 vec_rot = [
-    [" VR AXIS_ANGLE", "Axis (VRA) VEC ROTATE AXIS"],
-    [" VR X_AXIS", "X (VRX) VEC ROTATE X"],
-    [" VR Y_AXIS", "Y (VRY) VEC ROTATE Y"],
-    [" VR Z_AXIS", "Z (VRZ) VEC ROTATE Z"],
-    [" VR EULER_XYZ", "Euler (VRE) VEC ROTATE EULER"],
+    [" VR AXIS_ANGLE", "Axis (VRA) VECTOR ROTATE"],
+    [" VR X_AXIS", "X (VRX) VECTOR ROTATE"],
+    [" VR Y_AXIS", "Y (VRY) VECTOR ROTATE"],
+    [" VR Z_AXIS", "Z (VRZ) VECTOR ROTATE"],
+    [" VR EULER_XYZ", "Euler (VRE) VECTOR ROTATE"],
 ]
 
 uv_unwrap = [
     [" UU ANGLE_BASED", "Angle Based (AB) UV UNWRAP"],
     [" UU CONFORMAL", "Conformal (C) UV UNWRAP"],
+]
+
+fillet_curve = [
+    [" FC BEZIER", "Bezier (B) FILLET CURVE"],
+    [" FC POLY", "Poly (P) FILLET CURVE"]
 ]
 
 dom_size = gen_non_dtype_subnodes("DS", "DOMAIN SIZE", COMPONENT)
@@ -327,5 +332,6 @@ SUBNODE_ENTRIES = {
     "UV Unwrap": uv_unwrap,
     "Filter": c_filter,
     "Float to Integer": float_to_int,
-    "Accumulate Field": accum_field
+    "Accumulate Field": accum_field,
+    "Fillet Curve": fillet_curve
 }
