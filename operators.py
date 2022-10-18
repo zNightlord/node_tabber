@@ -14,7 +14,6 @@ from bpy.props import EnumProperty, StringProperty
 
 ADD_ON_PATH = pathlib.PurePath(os.path.dirname(__file__)).name
 
-
 def nt_debug(msg):
     prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
 
@@ -57,13 +56,13 @@ def sub_search(
     enum_items, node_type_index, node_type, extras_ops, index_offset, tally_dict
 ):
     if node_type_index > -1:
-        nt_debug(f"Adding ${str.lower(node_type)} nodes")
+        nt_debug(f'Adding ${node_type} nodes')
         for index2, subname in enumerate(extras_ops):
             sn_name, sn_label = subname
             tally = tally_dict.get(sn_label, {"tally":0})["tally"]
             enum_items.append(
                 (
-                    f"{node_type_index} {sn_name} {sn_label}",
+                    f'{node_type_index} {sn_name} {sn_label}',
                     sn_label,
                     str(tally),
                     index_offset + index2 + 1,
@@ -153,7 +152,7 @@ class NODE_OT_add_tabber_search(Operator):
     def find_node_item(self, context):
         nt_debug("DEF: find_node_item")
         tmp = int(self.node_item.split()[0])
-        nt_debug("FIND_NODE_ITEM: Tmp : " + str(self.node_item.split()))
+        nt_debug(f'FIND_NODE_ITEM: Tmp : {str(self.node_item.split())}')
 
         node_item = tmp
         extra = self.node_item.split()[1:]
@@ -179,13 +178,13 @@ class NODE_OT_add_tabber_search(Operator):
         # Add to tally
         short = ""
         words = item.label.split()
-        nt_debug("EXECUTE: Item label : " + str(item.label))
+        nt_debug(f'EXECUTE: Item label : {str(item.label)}')
         for word in words:
             short += word[0]
-        match = item.label + " (" + short + ")"
+        match = f'{item.label} ({short})'
 
         type = self.node_item.split()[1]
-        nt_debug("Checking type : " + str(type))
+        nt_debug(f'Checking type : str(type)')
 
         if type == "0":
             nt_debug("Writing normal node tally")
@@ -206,8 +205,8 @@ class NODE_OT_add_tabber_search(Operator):
             self.create_node(context, item.nodetype, node_tree_type)
 
             nt_debug(str(item.nodetype))
-            nt_debug("extra 0: " + str(extra[0]))
-            nt_debug("extra 1: " + str(extra[1]))
+            nt_debug(f'extra 0: {str(extra[0])}')
+            nt_debug(f'extra 1: {str(extra[1])}')
 
             space = context.space_data
             node_active = context.active_node
