@@ -148,19 +148,18 @@ class NODE_OT_add_tabber_search(Operator):
     # Look up the item based on index
     def find_node_item(self, context):
         nt_debug("DEF: find_node_item")
-        tmp = int(self.node_item.split()[0])
         nt_debug(f'FIND_NODE_ITEM: Tmp : {str(self.node_item.split())}')
 
-        node_item = tmp
-        extra = self.node_item.split()[1:]
-        nice_name = " ".join(self.node_item.split()[3:])
-        node_items = nodeitems_utils.node_items_iter(context)
+        data = self.node_item.split()
+        node_index, extra, nice_name = int(data[0]), data[1:], " ".join(data[3:])
 
         if context.space_data.tree_type == "GeometryNodeTree":
             node_items = geonodes_node_items(context)
+        else:
+            node_items = nodeitems_utils.node_items_iter(context)
 
         for index, item in enumerate(node_items):
-            if index == node_item:
+            if index == node_index:
                 return [item, extra, nice_name]
         return None
 
@@ -181,7 +180,7 @@ class NODE_OT_add_tabber_search(Operator):
         match = f'{item.label} ({short})'
 
         type = self.node_item.split()[1]
-        nt_debug(f'Checking type : str(type)')
+        nt_debug(f'Checking type : {str(type)}')
 
         if type == "0":
             nt_debug("Writing normal node tally")
