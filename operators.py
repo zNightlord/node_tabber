@@ -354,12 +354,10 @@ class NODE_OT_add_tabber_search(Operator):
         context.window_manager.invoke_search_popup(self)
         return {"CANCELLED"}
 
-    populate = node_enum_items
-
     node_item: EnumProperty(
         name="Node Type",
         description="Node type",
-        items=populate,
+        items=node_enum_items,
     )
 
 
