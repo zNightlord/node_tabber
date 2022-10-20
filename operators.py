@@ -16,7 +16,7 @@ ADD_ON_PATH = pathlib.PurePath(os.path.dirname(__file__)).name
 
 def nt_debug(msg):
     prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
-
+    
     if prefs.nt_debug:
         print(str(msg))
 
@@ -172,17 +172,14 @@ class NODE_OT_add_tabber_search(Operator):
         item, extra, nice_name = self.find_node_item(context)
 
         # Add to tally
-        short = ""
-        words = item.label.split()
         nt_debug(f'EXECUTE: Item label : {str(item.label)}')
-        for word in words:
-            short += word[0]
-        match = f'{item.label} ({short})'
+        subnodes_id = self.node_item.split()[1]
+        nt_debug(f'Checking type : {str(subnodes_id)}')
 
-        type = self.node_item.split()[1]
-        nt_debug(f'Checking type : {str(type)}')
+        if subnodes_id == "0":
+            abbr = "".join(word[0] for word in item.label.split())
+            match = f'{item.label} ({abbr})'
 
-        if type == "0":
             nt_debug("Writing normal node tally")
             write_score(match)
         else:
