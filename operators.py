@@ -55,21 +55,20 @@ def write_score(enum_items):
 def sub_search(
     enum_items, node_type_index, node_type, extras_ops, index_offset, tally_dict
 ):
-    if node_type_index > -1:
-        nt_debug(f'Adding ${node_type} nodes')
-        for index2, subname in enumerate(extras_ops):
-            sn_name, sn_label = subname
-            tally = tally_dict.get(sn_label, {"tally":0})["tally"]
-            enum_items.append(
-                (
-                    f'{node_type_index} {sn_name} {sn_label}',
-                    sn_label,
-                    str(tally),
-                    index_offset + index2 + 1,
-                )
+    nt_debug(f'Adding ${node_type} nodes')
+    for index2, subname in enumerate(extras_ops):
+        sn_name, sn_label = subname
+        tally = tally_dict.get(sn_label, {"tally":0})["tally"]
+        enum_items.append(
+            (
+                f'{node_type_index} {sn_name} {sn_label}',
+                sn_label,
+                str(tally),
+                index_offset + index2 + 1,
             )
-        index_offset += index2 + 1
-    return enum_items, index_offset
+        )
+    index_offset += index2 + 1
+    return index_offset
 
 
 class NodeTabSetting(PropertyGroup):
@@ -112,11 +111,8 @@ class NODE_OT_add_tabber_search(Operator):
             with open(path, "r") as f:
                 tally_dict = json.load(f)
 
-        index_offset = 0
-
-        item_index = {}
-        for key in nt_extras.SUBNODE_ENTRIES:
-            item_index[key] = -1
+        index_offset = 0               
+        item_index = {key: -1 for key in nt_extras.SUBNODE_ENTRIES}
 
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
@@ -133,12 +129,13 @@ class NODE_OT_add_tabber_search(Operator):
             sn_entries = nt_extras.SUBNODE_ENTRIES
             sn_info = zip(sn_entries.keys(), item_index.values(), item_index.keys(), sn_entries.values())
 
-            for nodetype, *sn_data in sn_info:
+            for nodetype, index, *sn_data in sn_info:
                 if space == "CompositorNodeTree" and nodetype == "Map Range":
                     continue
-                enum_items, index_offset = sub_search(
-                    enum_items, *sn_data, index_offset, tally_dict
-                )
+                if index > -1:
+                    index_offset = sub_search(
+                        enum_items, index, *sn_data, index_offset, tally_dict
+                    )
 
         if prefs.tally:
             enum_items.sort(key=take_fifth, reverse=True)
