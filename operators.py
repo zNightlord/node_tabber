@@ -23,7 +23,7 @@ def nt_debug(msg):
     return
 
 
-def take_fifth(elem):
+def sort_by_tally(elem):
     return int(elem[2])
 
 
@@ -138,7 +138,7 @@ class NODE_OT_add_tabber_search(Operator):
                     )
 
         if prefs.tally:
-            enum_items.sort(key=take_fifth, reverse=True)
+            enum_items.sort(key=sort_by_tally, reverse=True)
 
         return enum_items
 
