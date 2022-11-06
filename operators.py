@@ -127,6 +127,15 @@ class NODE_OT_add_tabber_search(Operator):
         # Add sub node searching if enabled
         if prefs.sub_search:
             sn_entries = nt_extras.SUBNODE_ENTRIES
+            if prefs.use_op_symbols:
+                sn_entries["Math"] = nt_extras.math_symb
+                sn_entries["Vector Math"] = nt_extras.vec_symb
+                sn_entries["Boolean Math"] = nt_extras.bool_symb
+            else:
+                sn_entries["Math"] = nt_extras.math
+                sn_entries["Vector Math"] = nt_extras.vec_math
+                sn_entries["Boolean Math"] = nt_extras.bool_math            
+
             sn_info = zip(sn_entries.keys(), item_index.values(), item_index.keys(), sn_entries.values())
 
             for nodetype, index, *sn_data in sn_info:

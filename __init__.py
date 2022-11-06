@@ -73,6 +73,12 @@ class node_tabberPreferences(AddonPreferences):
         description="Allows searching within node operations. Eg. PP could return Ping-Pong in the Math node.",
     )
 
+    use_op_symbols: BoolProperty(
+        name="Use Operation Symbols",
+        default=False,
+        description='Replaces math op abbreviations with their symbols. Eg. "ADD (A) MATH" becomes "ADD (+) MATH".',
+    )
+
     def draw(self, context):
         layout = self.layout
 
@@ -85,6 +91,7 @@ class node_tabberPreferences(AddonPreferences):
         row4 = box.row()
         row1.prop(self, "sub_search")
         row1.prop(self, "quick_place")
+        row1.prop(self, "use_op_symbols")
         row2.prop(self, "tally")
         row2.operator("node.reset_tally", text="Reset Tally")
         row2.prop(self, "tally_weight")
