@@ -9,7 +9,7 @@ This saves a lot of time when working with large node trees.
 
 This is a fork which includes:
 - Additional sub node entries for new vector math operations
-- Geometry Nodes sub node entries (i.e. switch/random value nodes)
+- Geometry Nodes sub-nodes
 - Fix for appending custom nodegroups (see https://github.com/jiggymoon69/node_tabber/pull/10)
 - Workaround for [this commit(Blender 3.4+)](https://github.com/blender/blender/commit/837144b4577f161baf1625f8a5478c83a088ea0f) which breaks the add-on with geonodes. See [D15973](https://developer.blender.org/D15973).
   
