@@ -15,3 +15,6 @@ This is a fork which includes:
   
 ## Installation (Blender 3.4+)
 Download this [repository](https://github.com/williamchange/node_tabber/archive/refs/heads/master.zip) and install from Blender's preferences, just like any other add-on (no need to unzip)
+
+## Older versions (Blender 3.1-3.3)
+You can find the add-on that works with older version(s) of Blender in their respective branches(i.e. [3.3](https://github.com/williamchange/node_tabber/tree/33))
