@@ -1,7 +1,5 @@
 import bpy
 import json
-import os
-import pathlib
 import time
 
 from .gn_items import geonodes_node_items
@@ -10,12 +8,14 @@ from . import nt_extras
 import nodeitems_utils
 from bpy.types import Operator, PropertyGroup
 from bpy.props import EnumProperty, StringProperty
+from pathlib import Path
 
 
-ADD_ON_PATH = pathlib.PurePath(os.path.dirname(__file__)).name
+ADDON_PATH = Path(__file__).parent
+ADDON_NAME = ADDON_PATH.name
 
 def nt_debug(msg):
-    prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
+    prefs = bpy.context.preferences.addons[ADDON_NAME].preferences
     
     if prefs.nt_debug:
         print(str(msg))
@@ -30,14 +30,14 @@ def sort_by_tally(elem):
 def write_score(enum_items):
     tree_type = bpy.context.space_data.tree_type
     category = f'{tree_type.removesuffix("NodeTree").lower()}.json'
-    prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
+    prefs = bpy.context.preferences.addons[ADDON_NAME].preferences
 
-    path = os.path.dirname(__file__) + "/" + category
-    if not os.path.exists(path):
+    path = Path(ADDON_PATH, category)
+    if not path.exists():
         with open(path, "w") as f:
             json.dump({enum_items: {"tally": 1}}, f)
 
-        print("Nodetabber created :" + path)
+        print(f"Nodetabber created : {path}")
     else:
         with open(path, "r") as f:
             tally_dict = json.load(f)
@@ -94,7 +94,7 @@ class NODE_OT_add_tabber_search(Operator):
         nt_debug("DEF: node_enum_items")
         enum_items = NODE_OT_add_tabber_search._enum_item_hack
 
-        prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
+        prefs = bpy.context.preferences.addons[ADDON_NAME].preferences
 
         enum_items.clear()
         space = context.space_data.tree_type
@@ -104,8 +104,8 @@ class NODE_OT_add_tabber_search(Operator):
         if space == "GeometryNodeTree":
             node_items = geonodes_node_items(context)
 
-        path = os.path.dirname(__file__) + "/" + category
-        if not os.path.exists(path):
+        path = Path(ADDON_PATH, category)
+        if not path.exists():
             tally_dict = {}
         else:
             with open(path, "r") as f:
@@ -172,7 +172,7 @@ class NODE_OT_add_tabber_search(Operator):
     def execute(self, context):
         nt_debug("DEF: execute")
         startTime = time.perf_counter()
-        prefs = bpy.context.preferences.addons[ADD_ON_PATH].preferences
+        prefs = bpy.context.preferences.addons[ADDON_NAME].preferences
 
         #Fetch node item info
         item, extra, nice_name = self.find_node_item(context)
@@ -371,16 +371,16 @@ class NODE_OT_reset_tally(Operator):
     bl_label = "Reset node tally count"
 
     def execute(self, context):
-        categories = ["shader.json", "compositor.json", "texture.json", "geometry.json"]
-        reset = False
-        for cat in categories:
-            path = os.path.dirname(__file__) + "/" + cat
-            if os.path.exists(path):
-                reset = True
-                # delete file
-                os.remove(path)
+        files_to_reset = (Path(ADDON_PATH, cat) for cat in 
+            ("shader.json", "compositor.json", "texture.json", "geometry.json"))
 
-        if reset:
+        did_reset = False
+        for tally_path in files_to_reset:
+            if tally_path.exists():
+                tally_path.unlink() #deletes files
+                did_reset = True
+
+        if did_reset:
             info = "Reset Tallies"
         else:
             info = "No tallies to reset."
