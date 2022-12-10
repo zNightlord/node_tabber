@@ -190,6 +190,7 @@ def geonodes_node_items(context):
         NodeItem("ShaderNodeVectorRotate"),
         NodeItem("GeometryNodeVolumeCube"),
         NodeItem("GeometryNodeVolumeToMesh"),
+        NodeItem("GeometryNodeBlurAttribute"),
         NodeItem("NodeFrame"),
         NodeItem("NodeReroute"),
         NodeItem("NodeGroupInput"),
