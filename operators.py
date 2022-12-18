@@ -249,7 +249,7 @@ class NODE_OT_add_tabber_search(Operator):
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
             # Store Named Attribute
-            if key == "STO":
+            if key == "SNA":
                 node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR")
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
