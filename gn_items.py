@@ -5,7 +5,10 @@ import bpy
 def geonodes_node_items(context):
     item_list = [
         NodeItem("GeometryNodeAttributeStatistic"),
+        NodeItem("GeometryNodeBlurAttribute"),
         NodeItem("GeometryNodeCaptureAttribute"),
+        NodeItem("GeometryNodeImageInfo"),
+        NodeItem("GeometryNodeInputImage"),
         NodeItem("GeometryNodeAttributeDomainSize"),
         NodeItem("GeometryNodeRemoveAttribute"),
         NodeItem("GeometryNodeStoreNamedAttribute"),
@@ -20,6 +23,7 @@ def geonodes_node_items(context):
         NodeItem("GeometryNodeDeformCurvesOnSurface"),
         NodeItem("GeometryNodeFillCurve"),
         NodeItem("GeometryNodeFilletCurve"),
+        NodeItem("GeometryNodeInterpolateCurves"),
         NodeItem("GeometryNodeResampleCurve"),
         NodeItem("GeometryNodeReverseCurve"),
         NodeItem("GeometryNodeSampleCurve"),
@@ -119,6 +123,7 @@ def geonodes_node_items(context):
         NodeItem("GeometryNodeInputMeshEdgeAngle"),
         NodeItem("GeometryNodeInputMeshEdgeNeighbors"),
         NodeItem("GeometryNodeInputMeshEdgeVertices"),
+        NodeItem("GeometryNodeEdgesToFaceGroups"),
         NodeItem("GeometryNodeInputMeshFaceArea"),
         NodeItem("GeometryNodeInputMeshFaceNeighbors"),
         NodeItem("GeometryNodeMeshFaceSetBoundaries"),
