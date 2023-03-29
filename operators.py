@@ -224,6 +224,10 @@ class NODE_OT_add_tabber_search(Operator):
             # UV Unwrap
             if key == "UU":
                 node_active.method = extra[1]
+            
+            # Blur Attribute
+            if key == "BA":
+                node_active.data_type = extra[1].replace("COLOR", "FLOAT_COLOR").replace("VECTOR", "FLOAT_VECTOR")
 
             # Math / Vector Math / Boolean Math
             if key in ["M", "VM", "BM"]:

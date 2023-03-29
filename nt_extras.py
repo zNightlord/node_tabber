@@ -382,6 +382,7 @@ map_range = gen_subnodes("MR", "MAP RANGE", ["FLOAT", "FLOAT_VECTOR"], INTERPOLA
 field_at_index = gen_subnodes("FaI", "FIELD AT INDEX", DATA_TYPE, DOMAIN)
 scale_el = gen_subnodes("SE", "SCALE ELEMENTS", DOMAIN[1:-3], SCALE_EL_MODES)
 accum_field = gen_subnodes("AF", "ACCUM FIELD", ["FLOAT", "INT", "FLOAT_VECTOR"], DOMAIN)
+blur_attr = gen_non_dtype_subnodes("BA", "BLUR ATTR", ["FLOAT", "INT", "VECTOR", "COLOR"])
 
 SUBNODE_ENTRIES = {
     "Math": math,
@@ -398,6 +399,7 @@ SUBNODE_ENTRIES = {
     "Sample Nearest Surface": sample_nearest_surf,
     "Sample UV Surface": sample_uv_surf,
     "Attribute Statistic": attr_stat,
+    "Blur Attribute": blur_attr,
     "Raycast": raycast,
     "Store Named Attribute": store_named_attr,
     "Capture Attribute": capture_attr,

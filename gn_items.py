@@ -5,7 +5,6 @@ import bpy
 def geonodes_node_items(context):
     item_list = [
         NodeItem("GeometryNodeAttributeStatistic"),
-        NodeItem("GeometryNodeBlurAttribute"),
         NodeItem("GeometryNodeCaptureAttribute"),
         NodeItem("GeometryNodeImageInfo"),
         NodeItem("GeometryNodeInputImage"),
