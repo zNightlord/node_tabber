@@ -37,7 +37,7 @@ FILTER_MODES = [
 
 
 def replace_dtype_labels(string):
-    return string.replace("FLOAT_", "").replace("INT", "integer")
+    return string.replace("FLOAT_", "").replace("INT", "integer").replace("_", " ")
 
 
 def gen_subnodes(a, b, setting1, setting2):
@@ -374,7 +374,7 @@ sample_nearest_surf = gen_dtype_subnodes("SNS", "SAMPLE NEAREST SURF")
 
 attr_stat = gen_subnodes("AST", "ATTR STAT", ["FLOAT", "FLOAT_VECTOR"], DOMAIN)
 raycast = gen_subnodes("RAY", "RAYCAST", DATA_TYPE, MAPPING)
-store_named_attr = gen_subnodes("SNA", "STORE NAMED ATTR", DATA_TYPE, DOMAIN)
+store_named_attr = gen_subnodes("SNA", "STORE NAMED ATTR", DATA_TYPE + ["2D_VECTOR"], DOMAIN)
 capture_attr = gen_subnodes("CAP", "CAP ATTR", DATA_TYPE, DOMAIN)
 interpolate_dom = gen_subnodes("INTER", "INTERPOLATE DOM", DATA_TYPE, DOMAIN)
 sample_index = gen_subnodes("SIN", "SAMPLE INDEX", DATA_TYPE, DOMAIN)

@@ -250,7 +250,7 @@ class NODE_OT_add_tabber_search(Operator):
 
             # Store Named Attribute
             if key == "SNA":
-                node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR")
+                node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR").replace("2D_VECTOR", "FLOAT2")
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
             # Scale Elements
