@@ -224,6 +224,10 @@ class NODE_OT_add_tabber_search(Operator):
             # UV Unwrap
             if key == "UU":
                 node_active.method = extra[1]
+            
+            # Blur Attribute
+            if key == "BA":
+                node_active.data_type = extra[1].replace("COLOR", "FLOAT_COLOR").replace("VECTOR", "FLOAT_VECTOR")
 
             # Math / Vector Math / Boolean Math
             if key in ["M", "VM", "BM"]:
@@ -250,7 +254,7 @@ class NODE_OT_add_tabber_search(Operator):
 
             # Store Named Attribute
             if key == "SNA":
-                node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR")
+                node_active.data_type = extra[1].replace("FLOAT_COLOR", "BYTE_COLOR").replace("2D_VECTOR", "FLOAT2")
                 node_active.domain = extra[2].replace("SPLINE", "CURVE")
 
             # Scale Elements
