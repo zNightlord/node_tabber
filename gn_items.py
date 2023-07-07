@@ -150,6 +150,7 @@ def geonodes_node_items(context):
         NodeItem("GeometryNodeFieldOnDomain"),
         NodeItem("GeometryNodeSwitch"),
         NodeItem("GeometryNodeUVPackIslands"),
+        NodeItem("GeometryNodeIndexOfNearest"),
         NodeItem("GeometryNodeUVUnwrap"),
         NodeItem("GeometryNodeVolumeCube"),
         NodeItem("GeometryNodeVolumeToMesh"),
