@@ -123,7 +123,12 @@ class NODE_OT_add_tabber_search(Operator):
                 enum_items.append((f'{index} 0 0', match, str(tally), index,))
                 index_offset = index
                 item_index[item.label] = index
-                
+        
+        if space == "GeometryNodeTree":
+            enum_items.append((f'{index+1} 0 0', "Simulation Zone (SZ)", str(tally), index+1,))
+            index_offset = index + 1
+            item_index["Simulation Zone"] = index + 1
+
         # Add sub node searching if enabled
         if prefs.sub_search:
             sn_entries = nt_extras.SUBNODE_ENTRIES
@@ -175,27 +180,43 @@ class NODE_OT_add_tabber_search(Operator):
         prefs = bpy.context.preferences.addons[ADDON_NAME].preferences
 
         #Fetch node item info
-        item, extra, nice_name = self.find_node_item(context)
+        try:
+            item, extra, nice_name = self.find_node_item(context)
+        except TypeError:
+            item = "GeometryNodeSimulationZone"
 
         # Add to tally
-        nt_debug(f'EXECUTE: Item label : {str(item.label)}')
-        subnodes_id = self.node_item.split()[1]
-        nt_debug(f'Checking type : {str(subnodes_id)}')
-
-        if subnodes_id == "0":
-            abbr = "".join(word[0] for word in item.label.split())
-            match = f'{item.label} ({abbr})'
-
+        
+        if item == "GeometryNodeSimulationZone":
             nt_debug("Writing normal node tally")
-            write_score(match)
+            write_score("Simulation Zone (SZ)")
         else:
-            nt_debug("Writing sub node tally")
-            write_score(nice_name)
+            nt_debug(f'EXECUTE: Item label : {str(item.label)}')
+            subnodes_id = self.node_item.split()[1]
+            nt_debug(f'Checking type : {str(subnodes_id)}')
 
-        nt_debug("Hack")
+            if subnodes_id == "0":
+                abbr = "".join(word[0] for word in item.label.split())
+                match = f'{item.label} ({abbr})'
+
+                nt_debug("Writing normal node tally")
+                write_score(match)
+            else:
+                nt_debug("Writing sub node tally")
+                write_score(nice_name)
+
+            nt_debug("Hack")
 
         # no need to keep
         self._enum_item_hack.clear()
+
+        if item == "GeometryNodeSimulationZone":
+            bpy.ops.node.add_simulation_zone(use_transform=True)
+            if not prefs.quick_place:
+                bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")
+
+            nt_debug("Time taken: " + str(time.perf_counter() - startTime))
+            return {"FINISHED"}
 
         if item:
             node_tree_type = None
