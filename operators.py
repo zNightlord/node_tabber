@@ -33,6 +33,7 @@ def write_score(enum_items):
     prefs = bpy.context.preferences.addons[ADDON_NAME].preferences
 
     path = Path(ADDON_PATH, category)
+    
     if not path.exists():
         with open(path, "w") as f:
             json.dump({enum_items: {"tally": 1}}, f)
@@ -114,9 +115,17 @@ class NODE_OT_add_tabber_search(Operator):
         index_offset = 0               
         item_index = {key: -1 for key in nt_extras.SUBNODE_ENTRIES}
 
+        name_path = Path(ADDON_PATH, "config")
+        with open(name_path, "r") as f:
+          name_dict = json.load(f)
+        
         for index, item in enumerate(node_items):
             if isinstance(item, nodeitems_utils.NodeItem):
-                abbr = "".join(word[0] for word in item.label.split())
+                # Search if there is a alter name in config
+                node_label = item.label
+                node_label = name_dict.get(node_label, node_label)
+                
+                abbr = "".join(word[0] for word in node_label.split())
                 match = f'{item.label} ({abbr})'
                 tally = tally_dict.get(match, {"tally":0})["tally"]
 
@@ -196,8 +205,9 @@ class NODE_OT_add_tabber_search(Operator):
             nt_debug(f'Checking type : {str(subnodes_id)}')
 
             if subnodes_id == "0":
-                abbr = "".join(word[0] for word in item.label.split())
-                match = f'{item.label} ({abbr})'
+                node_label = item.label
+                abbr = "".join(word[0] for word in node_label.split())
+                match = f'{node_label} ({abbr})'
 
                 nt_debug("Writing normal node tally")
                 write_score(match)
