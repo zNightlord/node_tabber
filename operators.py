@@ -125,9 +125,15 @@ class NODE_OT_add_tabber_search(Operator):
                 item_index[item.label] = index
         
         if space == "GeometryNodeTree":
-            enum_items.append((f'{index+1} 0 0', "Simulation Zone (SZ)", str(tally), index+1,))
-            index_offset = index + 1
-            item_index["Simulation Zone"] = index + 1
+            index +=1
+            enum_items.append((f'{index} 0 0', "Simulation Zone (SZ)", str(tally), index,))
+            index_offset = index
+            item_index["Simulation Zone"] = index
+            index +=1
+            enum_items.append((f'{index
+            } 0 0', "Repeat Zone (RZ)", str(tally), index+1,))
+            index_offset = index
+            item_index["Repeat Zone"] = index
 
         # Add sub node searching if enabled
         if prefs.sub_search:
@@ -211,7 +217,7 @@ class NODE_OT_add_tabber_search(Operator):
         self._enum_item_hack.clear()
 
         if item == "GeometryNodeSimulationZone":
-            bpy.ops.node.add_simulation_zone(use_transform=True)
+          self.create_pair_node(context, "GeometryNodeSimulationZone")
             if not prefs.quick_place:
                 bpy.ops.node.translate_attach_remove_on_cancel("INVOKE_DEFAULT")
 
@@ -353,6 +359,28 @@ class NODE_OT_add_tabber_search(Operator):
             return {"FINISHED"}
         else:
             return {"CANCELLED"}
+
+    def create_pair_node(self, context, pair_type, offset= (0,150)):
+        tree = space.edit_tree
+        if pair_type == "GeometryNodeSimulationZone":
+            input_node_type = "GeometryNodeSimulationInput"
+            output_node_type = "GeometryNodeSimulationOutput"
+        if pair_type == "GeometryNodeRepeatZone":
+            input_node_type = "GeometryNodeRepeatInput"
+            output_node_type = "GeometryNodeRepeatOutput"
+        
+        input_node = self.create_node(context, input_node_type)
+        output_node = self.create_node(context, output_node_type)
+        
+        # Input needs to be pair with output
+        input_node.pair_with_output(output_node)
+        
+        input_node.location -= Vector(offset)
+        output_node.location += Vector(offset)
+         
+        from_socket = input_node.outputs.get("Geometry")
+        to_socket = output_node.inputs.get("Geometry")
+        tree.links.new(to_socket, from_socket)
 
     def create_node(self, context, node_type=None, node_tree_type=None):
         nt_debug("DEF: create_node")

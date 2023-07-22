@@ -200,6 +200,8 @@ def geonodes_node_items(context):
         NodeItem("NodeReroute"),
         NodeItem("NodeGroupInput"),
         NodeItem("NodeGroupOutput"),
+        NodeItem("GeometryNodeSimulationInput"),
+        NodeItem("GeometryNodeRepeatInput")
     ]
     for tree in bpy.data.node_groups:
         if tree.type == "GEOMETRY" and tree.name != context.space_data.edit_tree.name:
